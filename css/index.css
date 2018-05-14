@@ -173,7 +173,7 @@ color: #FFFFFF;
 
 
 .time-line .top-line {
-border-top:7px solid #009200;
+    border-top:7px solid #009200;
 }
 
 .operate-bg {
@@ -240,6 +240,11 @@ border-top:7px solid #009200;
     color: #000000;
     padding-top: 24px;
     font-weight: bold;
+}
+
+.content_title span{
+    padding-bottom: 5px;
+    border-bottom: 2px solid #6699CC;
 }
 
 .conference-topic .cfr-topic-area {

@@ -47,7 +47,7 @@ $(document).ready(function() {
         //$("p").css("background-color","yellow");
     });
 
-    loadNews();
+    //loadNews();
     function loadNews() {
         $.ajax({
             type: "GET",
