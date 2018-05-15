@@ -22,6 +22,7 @@ $(document).ready(function() {
     var ok8=false;
     var ok9=false;
     var ok10=false;
+    /*
     var schoolData =[
         '清华大学','北京大学', '北京工业大学', '北京航空航天大学',
         '北京化工大学', '北京交通大学', '北京科技大学', '北京理工大学', '北京林业大学', '北京师范大学', '成都理工大学',
@@ -70,46 +71,47 @@ $(document).ready(function() {
         $('.input-res-school').html(str);
 
     }
+    */
     function bindEvent() {
         $('#sign-up-btn').on('click', function () {
             // 验证用户名
             var userName = $.trim($('#sign-up-nickname').val());
             if(userName=='') {
-                swal('请填写用户名');
+                swal('Please input username.');
                 return false
             }
             var emailReg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
             var email = $.trim($('#sign-up-email').val());
             if(!(emailReg.test(email)) || email == ''){
-                swal('请填写正确格式的邮箱');
+                swal('Please input correct email');
                 return false
             }
 
             var password = $('#sign-up-pwd').val();
             if(password.length<6 || password == ''){
-                swal('请设置6位以上的密码');
+                swal('Please input password longer than 6');
                 return false
             }
 
             var dpwd = $('#sign-up-pwd-again').val();
             if(dpwd==''){
-                swal('请再次确认你的密码');
+                swal('Please input confirmation of password');
                 return false
             }
             if(dpwd!=password){
-                swal('两次输入密码不一致');
+                swal('Password and confirmation are different');
                 return false
             }
 
             var stuName = $.trim($('#sign-up-name').val());
             if(stuName=='') {
-                swal('请填写姓名');
+                swal('Please input name');
                 return false
             }
 
             var sex = $('#sign-up-sex option:selected').val();//选中的值;
             if(sex=='') {
-                swal('请选择性别');
+                swal('Please select sex');
                 return false
             }
 
@@ -357,6 +359,6 @@ $(document).ready(function() {
 
 
     bindEvent();
-    _init_area()
+    // _init_area()
 });
 

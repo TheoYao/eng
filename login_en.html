@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>第十二届全国环境博士生学术会议</title>
+    <title>The 12th Environmental Conference for Doctoral Students</title>
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
@@ -35,76 +35,63 @@
 <div class="loginBg">
     <div class="resLogin">
         <a href="index_en.html"><div class="loginLogo"><img src="./images/pure_logo.png" alt=""></div></a>
-        <div class="loginMeetingTitle">第十二届全国环境博士生学术会议</div>
+        <div class="loginMeetingTitle">The 12th Environmental Conference for Doctoral Students</div>
         <div class="loginContent">
             <p class="loginContentTitle">
-                <a href="javascript:void(0);" onclick="openTab(0)" class="titleBtn">注册</a>
-                <a href="javascript:void(0);" onclick="openTab(1)" class="titleBtn active">登录</a>
+                <a href="javascript:void(0);" onclick="openTab(0)" class="titleBtn">SignIn</a>
+                <a href="javascript:void(0);" onclick="openTab(1)" class="titleBtn active">SignUp</a>
             </p>
             <div class="doc-content-res">
 
                 <div id="sign-up-tab" class="option-tab" style="display:none">
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>用户名：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Username：</span>
                         <input type="text" class="form-control" id="sign-up-nickname">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field"><span class="necessary-tips">*</span>邮箱地址：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Email：</span>
                         <input type="text" class="form-control" id="sign-up-email">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>密码：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Password：</span>
                         <input type="password" class="form-control" id="sign-up-pwd">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field"><span class="necessary-tips">*</span>确认密码：</span>
+                        <span class="input-group-addon summary_submit_field"><span class="necessary-tips">*</span>Confirmation：</span>
                         <input type="password" class="form-control" id="sign-up-pwd-again">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>姓名：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Name：</span>
                         <input type="text" class="form-control" id="sign-up-name">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>性别：</span>
-                        <select class="selectpicker form-control" id="sign-up-sex" title="性别">
-                            <option>男</option>
-                            <option>女</option>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Sex：</span>
+                        <select class="selectpicker form-control" id="sign-up-sex" title="Sex">
+                            <option>Male</option>
+                            <option>Female</option>
                         </select>
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">出生年月：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Birthday：</span>
                         <input type="text" class="form_datetime form-control" id="sign-up-birthday">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>院校：</span>
-                        <select class="selectpicker form-control input-res-school" data-live-search="true" id="sign-up-school" title="请选择院校"></select>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>School：</span>
+                        <input type="text" class="form-control" id="sign-up-school">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StudentID：</span>
                         <input type="text" class="form-control" id="sign-up-sno">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field"><span class="necessary-tips">*</span>导师姓名：</span>
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Tutor：</span>
                         <input type="text" class="form-control" id="sign-up-tutor">
                     </div>
                     <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>手机号：</span>
-                        <input type="text" class="form-control" id="sign-up-mobile">
+                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Address：</span>
+                        <input type="text" class="form-control" id="sign-up-more-address">
                     </div>
-                    <div class="input-group input-group-self">
-                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>地址：</span>
-                        <div class="addr-res-link">
-                            <div>
-                                <select id="s_province" class="res-province" name="s_province"></select>
-                                <select id="s_city" class="res-city" name="s_city" ></select>
-                                <select id="s_county" class="res-county" name="s_county"></select>
-                            </div>
-                            <div id="show"></div>
-                            <input type="text" class="form-control" id="sign-up-more-address">
-                        </div>
-
-                    </div>
-                    <p class="loginContentBtn" id="sign-up-btn"><a href="javascript:void(0);">注册</a></p>
+                    <p class="loginContentBtn" id="sign-up-btn"><a href="javascript:void(0);">SignUp</a></p>
                 </div>
 
 
@@ -113,50 +100,16 @@
                     <span class="input input--juro">
                         <input class="input__field input__field--juro" type="text" id="sign-in-username" style="display:none;"/>
                         <label class="input__label input__label--juro" for="sign-in-username">
-                            <span class="input__label-content input__label-content--juro">登录账号/邮箱：</span>
+                            <span class="input__label-content input__label-content--juro">Username/Email：</span>
                         </label>
                     </span>
                     <span class="input input--juro">
                         <input class="input__field input__field--juro" type="password" id="sign-in-pwd" style="display:none;"/>
                         <label class="input__label input__label--juro" for="sign-in-pwd">
-                            <span class="input__label-content input__label-content--juro">登录密码：</span>
+                            <span class="input__label-content input__label-content--juro">Password：</span>
                         </label>
                     </span>
-                    <p class="loginContentBtn" id="sign-in-btn"><a href="javascript:void(0);">登录</a></p>
-                    <div id="forget_pwd"><a href="javascript:void(0);">忘记密码?</a></div>
-                    <div class="modal fade" id="forgetPwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">忘记密码</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="input-group input-group-self">
-                                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：</span>
-                                        <input type="text" class="form-control" placeholder="请输入邮箱" id="forget_pwd_mail">
-                                    </div>
-                                    <div class="input-group input-group-self">
-                                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机：</span>
-                                        <input type="text" class="form-control" placeholder="请输入手机号" id="forget_pwd_mobile">
-                                    </div>
-                                    <div class="input-group input-group-self">
-                                        <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;新密码：</span>
-                                        <input type="password" class="form-control" placeholder="请输入新密码" id="forget_pwd_pwd">
-                                    </div>
-                                    <div class="input-group input-group-self">
-                                        <span class="input-group-addon summary_submit_field">&nbsp;确认密码：</span>
-                                        <input type="password" class="form-control" placeholder="请再次输入新密码" id="forget_pwd_pwd_again">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" id="modal-modify-pwd" class="btn btn-primary">确定修改</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <p class="loginContentBtn" id="sign-in-btn"><a href="javascript:void(0);">SignIn</a></p>
                 </div>
 
 
