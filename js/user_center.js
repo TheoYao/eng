@@ -7,7 +7,7 @@ $(document).ready(function() {
         var identity =JSON.parse($.cookie('cookie_info')).identity;
 
     }else {
-        window.location.href = "login.html#signin"
+        window.location.href = "login_en.html#signin"
     }
     if(identity.indexOf('audit') == -1){
         $("#audit-nav-button").remove()
@@ -20,7 +20,7 @@ $(document).ready(function() {
         minView: 2,
         pickerPosition: "bottom-left"
     });
-
+/*
     var schoolData =[
         '清华大学','北京大学', '北京工业大学', '北京航空航天大学',
         '北京化工大学', '北京交通大学', '北京科技大学', '北京理工大学', '北京林业大学', '北京师范大学', '成都理工大学',
@@ -69,7 +69,7 @@ $(document).ready(function() {
         $('#personal_info_input_school').html(str);
 
     };
-
+*/
     fillPersonInfo();
     function fillPersonInfo() {
         $.ajax({
@@ -87,12 +87,12 @@ $(document).ready(function() {
                     $("#personal_info_input_mail").attr("value", curData["email"]);
                     $("#personal_info_input_name").attr("value", curData["stuName"]);
                     if (curData["sex"] == "男") {
-                        $("button[data-id='personal_info_input_sex']").attr("title", "男");
-                        $("button[data-id='personal_info_input_sex'] .filter-option").text("男")
+                        $("button[data-id='personal_info_input_sex']").attr("title", "Male");
+                        $("button[data-id='personal_info_input_sex'] .filter-option").text("Male")
                     }
                     else{
-                        $("button[data-id='personal_info_input_sex']").attr("title", "女");
-                        $("button[data-id='personal_info_input_sex'] .filter-option").text("女")
+                        $("button[data-id='personal_info_input_sex']").attr("title", "Female");
+                        $("button[data-id='personal_info_input_sex'] .filter-option").text("Female")
                     }
 
                     $("#personal_info_input_birth").attr("value", curData["birthDate"]);
@@ -104,7 +104,7 @@ $(document).ready(function() {
                         $("#personal_info_input_stuno").attr("value", curData["userID"]);
                     }
                     else{
-                        $("#personal_info_input_stuno").attr("placeholder", "暂无");
+                        $("#personal_info_input_stuno").attr("placeholder", "NULL");
                     }
                     $("#personal_info_input_stuno").attr("value", curData["userID"]);
                     $("#personal_info_input_docno").attr("value", curData["docName"]);
@@ -125,7 +125,7 @@ $(document).ready(function() {
 
             },
             error: function () {
-                swal('对不起，当前服务器开小差，请稍候再试', '', "error")
+                swal('Sorry, Please retry later', '', "error")
             }
 
         });
@@ -191,23 +191,20 @@ $(document).ready(function() {
         var addCompany = $.trim($('#summary_input_more_unit').val());
         var isCommuAuthor =document.getElementById("toggle-button").checked;
         if(addName==''){
-            alert('请填写作者姓名');
+            alert('Please input name');
             return false
         }
-        if(addPing==''||(/[\u4E00-\u9FA5\uF900-\uFA2D]/).test(addPing)){
-            alert('请填写作者拼音');
-            return false
-        }
+
         if(addEmail==''||!(emailReg.test(addEmail))){
-            alert('请填写作者邮箱');
+            alert('Plese input email');
             return false
         }
         if(addCompany==''){
-            alert('请填写作者地址');
+            alert('Please input address');
             return false
         }
         if(isCommuAuthor){
-            addName = addName + "(通讯作者)"
+            addName = addName + "(Corresponding)"
         }
         $('.more-author-list').append('<span class="more-author-item" data-name='+addName+' data-ping='+addPing+' data-email='+addEmail+' data-company='+addCompany+'>'+addName+'</span>')
         if (!$("#more-author-show").attr("value")) {
@@ -236,20 +233,16 @@ $(document).ready(function() {
     $('#btn-submit-summary').on('click', function () {
         var emailReg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
         var fileSrc = $("input[name=fileString]")[0].files[0];
-        var chineseTitle = $.trim($('#summary_input_cn_title').val());
         var englishTitle = $.trim($('#summary_input_egls_title').val());
-        var keyChinese = $.trim($('#summary_input_cn_kwd').val());
         var keyEnglish = $.trim($('#summary_input_egls_kwd').val());
         var theme = $.trim($('#summary_input_topic option:selected').val());
         var authorName = $('#summary_input_author_name').val();
-        var authorPing = $.trim($('#summary_input_author_spell').val());
         var authorEmail = $.trim($('#summary_input_email').val());
         var authorCompany = $.trim($('#summary_input_unit').val());
         var remarks = $.trim($('#summary_submit_remark').val());
 
         var author = [{
             authorName: authorName,
-            authorPing: authorPing,
             authorEmail: authorEmail,
             authorCompany: authorCompany
         }];
@@ -257,11 +250,9 @@ $(document).ready(function() {
         moreAuthor.each(function (i) {
             var item={};
             var addName=  $(this).attr('data-name');
-            var addPing=  $(this).attr('data-ping');
             var addEmail=  $(this).attr('data-email');
             var addCompany=  $(this).attr('data-company');
             item.authorName =addName;
-            item.authorPing =addPing;
             item.authorEmail =addEmail;
             item.authorCompany =addCompany;
             author.push(item);
@@ -269,51 +260,37 @@ $(document).ready(function() {
         var fileArray = fileSrc.name.split(".");//获取上传文件的后缀
         var fileAccept = fileArray[fileArray.length - 1]
         if( fileAccept!="doc" && fileAccept!="docx" ){
-            swal("只能上传.doc和.docx的文件！");
+            swal("Only .doc and .docx allowed！");
         }
 
 
-        if(!/[\u4E00-\u9FA5\uF900-\uFA2D]/.test(chineseTitle)){
-            swal('请填写中文标题');
-            return false
-        }
-        if(!(/[\u4E00-\u9FA5\uF900-\uFA2D]||\，*||\,*/.test(keyChinese))){
-            swal('请填写不过超过5个关键字，以逗号隔开');
-            return false
-        }
         if(authorName==''){
-            swal('请填写作者姓名');
-            return false
-        }
-        if(authorPing==''||/[\u4E00-\u9FA5\uF900-\uFA2D]/.test(authorPing)){
-            swal('请填写作者拼音');
+            swal('Please input name');
             return false
         }
         if(authorEmail==''||!(emailReg.test(authorEmail))){
-            swal('请填写作者邮箱');
+            swal('Please input email');
             return false
         }
         if(authorCompany==''){
-            swal('请填写作者地址');
+            swal('Please input address');
             return false
         }
 
         swal(
             {
-                title: "确定提交吗？",
-                text: "每人只能提交一份稿件，提交后信息将无法修改！",
+                title: "Conform to submit？",
+                text: "Only one manuscript can be uploaded, and forbidden to modify",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定提交",
+                confirmButtonText: "Confirmation",
                 closeOnConfirm: false
             }, function(){
                 var data = new FormData();
                 data.append('username', username);
                 data.append('fileSrc', fileSrc);
-                data.append('chineseTitle', chineseTitle);
                 data.append('englishTitle', englishTitle);
-                data.append('keyChinese', keyChinese);
                 data.append('keyEnglish', keyEnglish);
                 data.append('theme', theme);
                 data.append('author', JSON.stringify(author));
@@ -328,15 +305,15 @@ $(document).ready(function() {
                     contentType: false,
                     success: function (data) {
                         if (data.status == 1) {
-                            swal("提交成功！", "请等待审核。", "success");
+                            swal("Success！", "Pleae wait to audit。", "success");
                             window.location.reload();
                         } else {
-                            swal("出现问题", data.info, "error");
+                            swal("Error", data.info, "error");
                             return false;
                         }
                     },
                     error: function () {
-                        swal('网路不给力，请稍候再试');
+                        swal('Please retry later');
                     }
                 })
             });
@@ -349,21 +326,21 @@ $(document).ready(function() {
 
         var stuName = $.trim($('#personal_info_input_name').val());
         if(stuName=='') {
-            swal('请填写姓名');
+            swal('Please input name');
             return false
         }
 
         var sex = $("button[data-id='personal_info_input_sex']").attr("title");
         if(sex=='') {
-            swal('请选择性别');
+            swal('Please select sex');
             return false
         }
 
         var birthDate = $('#personal_info_input_birth').val();
 
-        var school = $("button[data-id='personal_info_input_school']").attr("title");
+        var school = $.trim($('#personal_info_input_school').val());
         if(school=='') {
-            swal('请选择学校');
+            swal('Please input school');
             return false
         }
 
@@ -371,29 +348,23 @@ $(document).ready(function() {
 
         var docName = $.trim($('#personal_info_input_docno').val());
         if(docName=='') {
-            swal('请输入导师姓名');
-            return false
-        }
-
-        var phone = $.trim($('#personal_info_mobile').val());
-        if(phone=='') {
-            swal('请输入手机号');
+            swal('Please input tutor');
             return false
         }
 
         //地址拼接
         var address = $.trim($('#personal_info_input_addr').val());
         if(address=='') {
-            swal('请输入地址');
+            swal('Please input address');
             return false
         }
         swal(
             {
-                title: "确定提交吗？",
+                title: "Confirm to submit？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定提交",
+                confirmButtonText: "Confirmation",
                 closeOnConfirm: false
             }, function(){
                 $.ajax({
@@ -418,7 +389,7 @@ $(document).ready(function() {
                     },
                     success: function (data) {
                         if (data.status == 1) {
-                            swal('修改成功', "","success");
+                            swal('Success', "","success");
                             window.location.reload();
 
                         } else {
@@ -431,7 +402,7 @@ $(document).ready(function() {
 
                     },
                     error: function () {
-                        swal('对不起，当前服务器开小差，请稍候再试', '', "error")
+                        swal('Sorry, please retry later', '', "error")
                     }
                 });
             });
@@ -443,25 +414,25 @@ $(document).ready(function() {
         var cPwd = $('#modify_password_input_again').val();
 
         if(oldPwd.length<6 || oldPwd == ''){
-            swal('请填写你原来的密码');
+            swal('Please input old password');
             return false;
         }
         if(newPwd.length<6 || newPwd == ''){
-           swal('请设置6位以上的密码');
+           swal('Please input new password longer than 6');
             return false;
         }
         if(cPwd != newPwd || cPwd==''){
-            swal('请再次确认你的密码');
+            swal('Please confirm password');
             return false;
         }
 
         swal(
             {
-                title: "确定提交吗？",
+                title: "Confirm to submit？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定提交",
+                confirmButtonText: "Confirmation",
                 closeOnConfirm: false
             }, function(){
                 $.ajax({
@@ -476,22 +447,22 @@ $(document).ready(function() {
                     success: function (data) {
                         if (data.status == 1) {
                             swal({
-                                    title: "设置成功",
+                                    title: "Success",
                                     type: "success",
                                     confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "确定",
+                                    confirmButtonText: "Yes",
                                     closeOnConfirm: false
                                 }, function() {
                                 $.cookie('cookie_info', '', {expires: -1});
-                                window.location.href = "http://ndac.env.tsinghua.edu.cn/app/Mainpage/login.html";
+                                window.location.href = "http://ndac.env.tsinghua.edu.cn/app/Engpage/login_en.html";
                             })
                         } else {
-                            swal("修改失败，请重新设置");
+                            swal("Sorry, please modify again.");
                             return false;
                         }
                     },
                     error: function () {
-                        swal('网路不给力，请稍候再试');
+                        swal('Sorry, please retry later');
                     }
                 })
             });
@@ -538,19 +509,17 @@ $(document).ready(function() {
                     $('#manuDetailModal').modal()
                     var modal_value = $(".detail-modal-content");
                     $(modal_value[0]).text(curData["docu_id"]);
-                    $(modal_value[1]).text(curData["chineseTitle"]);
                     $(modal_value[2]).text(curData["englishTitle"]);
-                    $(modal_value[3]).text(curData["keyChinese"]);
                     $(modal_value[4]).text(curData["keyEnglish"]);
                     $(modal_value[5]).text(curData["theme"]);
                     $(modal_value[6]).text(curData["create_time"]);
                     var manuStatus = "未知";
                     switch(curData["status"]) {
                         case "1":
-                            manuStatus = "已提交";
+                            manuStatus = "Submit";
                             break;
                         case "2":
-                            manuStatus = "待审";
+                            manuStatus = "To Audit";
                             break;
                         case "3":
                             manuStatus = "";
@@ -559,12 +528,12 @@ $(document).ready(function() {
                             manuStatus = "";
                             break;
                         case "5":
-                            manuStatus = "不宜采纳";
+                            manuStatus = "Refused";
                             break;
                     }
                     $(modal_value[7]).text(manuStatus);
-                    $(modal_value[8]).text(curData["audit_opinion"] || "暂无审稿意见");
-                    $(modal_value[9]).html("<span id=\"download_abstract\" docuid="+curData["filename"]+"><a>点击下载</a></span>");
+                    $(modal_value[8]).text(curData["audit_opinion"] || "Null");
+                    $(modal_value[9]).html("<span id=\"download_abstract\" docuid="+curData["filename"]+"><a>Download</a></span>");
                 } else {
                     console.log(res.info);
                 }

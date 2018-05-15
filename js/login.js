@@ -197,7 +197,7 @@ $(document).ready(function() {
                                 confirmButtonText: "确定",
                                 closeOnConfirm: false
                             }, function() {
-                                window.location.href = "http://ndac.env.tsinghua.edu.cn/app/Mainpage/login.html";
+                                window.location.href = "http://ndac.env.tsinghua.edu.cn/app/Engpage/login_en.html";
                             })
                     } else {
                         swal(data.info);
