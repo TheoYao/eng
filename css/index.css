@@ -99,7 +99,7 @@ ul,li{padding:0;margin:0;list-style:none;}
 .nav-menu ul, .nav-menu ul li {background-color: rgba(238, 240, 236, 1.0);}
 
 .nav-menu ul li{
-    width: 105px;
+    width: 120px;
     text-align: center;
     display: inline-block;
 }
@@ -369,7 +369,7 @@ color: #FFFFFF;
 .footer .footer-col-item {
     display: inline-block;
     vertical-align:top;
-    width:350px;
+    width:520px;
 }
 .footer .footer-col-name {
     font-size: 1.6em;

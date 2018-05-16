@@ -7,7 +7,7 @@ $(document).ready(function() {
         var identity =JSON.parse($.cookie('cookie_info')).identity;
 
     }else {
-        window.location.href = "login_en.html#signin"
+        //window.location.href = "login_en.html#signin"
     }
     if(identity.indexOf('audit') == -1){
         $("#audit-nav-button").remove()
@@ -86,7 +86,7 @@ $(document).ready(function() {
                     $("#personal_info_input_username").attr("value", curData["username"]);
                     $("#personal_info_input_mail").attr("value", curData["email"]);
                     $("#personal_info_input_name").attr("value", curData["stuName"]);
-                    if (curData["sex"] == "男") {
+                    if (curData["sex"] == "Male") {
                         $("button[data-id='personal_info_input_sex']").attr("title", "Male");
                         $("button[data-id='personal_info_input_sex'] .filter-option").text("Male")
                     }
@@ -96,19 +96,8 @@ $(document).ready(function() {
                     }
 
                     $("#personal_info_input_birth").attr("value", curData["birthDate"]);
-
-                    $("button[data-id='personal_info_input_school']").attr("title", curData["school"]);
-                    $("button[data-id='personal_info_input_school'] .filter-option").text(curData["school"]);
-
-                    if (curData["userID"] != "") {
-                        $("#personal_info_input_stuno").attr("value", curData["userID"]);
-                    }
-                    else{
-                        $("#personal_info_input_stuno").attr("placeholder", "NULL");
-                    }
-                    $("#personal_info_input_stuno").attr("value", curData["userID"]);
+                    $("#personal_info_input_school").attr("value", curData["school"]);
                     $("#personal_info_input_docno").attr("value", curData["docName"]);
-                    $("#personal_info_mobile").attr("value", curData["phone"]);
                     $("#personal_info_input_addr").attr("value", curData["address"]);
 
 
@@ -166,7 +155,7 @@ $(document).ready(function() {
         var aimStr = "";
         for (i=0; i<data.length; i++){
             var curData = data[i];
-            var curTitle = curData["chineseTitle"];
+            var curTitle = curData["englishTitle"];
             var curDate = curData["create_time"].split(" ")[0];
             var curDocuId = curData["docu_id"];
             if (i%2 == 1){

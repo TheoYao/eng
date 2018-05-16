@@ -7,7 +7,7 @@ $(document).ready(function() {
             return
         }
 
-        window.location.href = "user_center.html?time=20180507.html"
+        window.location.href = "user_center_en.html?time=20180507.html"
     }
     //tab切换
     var url = "http://ndac.env.tsinghua.edu.cn/app/index.php/";
@@ -80,6 +80,10 @@ $(document).ready(function() {
                 swal('Please input username.');
                 return false
             }
+            if(userName.length < 6){
+                swal('Please input username longer than 6');
+                return false
+            }
             var emailReg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
             var email = $.trim($('#sign-up-email').val());
             if(!(emailReg.test(email)) || email == ''){
@@ -116,51 +120,24 @@ $(document).ready(function() {
             }
 
             var birthDate = $('#sign-up-birthday').val();
-            /*
-            if(birthDate=='') {
-                swal('请选择出生年月');
-                return false
-            }
-            */
+
             var school = $('#sign-up-school option:selected').val();
             if(school=='') {
-                swal('请选择学校');
+                swal('Please input school');
                 return false
             }
 
-            var userId = $.trim($('#sign-up-sno').val());
 
             var docName = $.trim($('#sign-up-tutor').val());
             if(docName=='') {
-                swal('请输入导师姓名');
+                swal('Please input tutor');
                 return false
             }
 
-            var phone = $.trim($('#sign-up-mobile').val());
-            if(phone=='' || phone.length != 11) {
-                swal('请输入正确格式的手机号');
-                return false
-            }
 
-            //地址拼接
-            var resProvince=$('.res-province option:selected').val();
-            if(resProvince=='省份') {
-                swal('请选择省份');
-                return false
-            }
-            var resCity=$('.res-city option:selected').val();
-            if(resCity=='地级市') {
-                swal('请选择城市');
-                return false
-            }
-            var resCounty=$('.res-county option:selected').val();
-            if(resCounty=='市、县级市') {
-                swal('请选择县区');
-                return false
-            }
             var addressText = $.trim($('#sign-up-more-address').val());
             if(addressText=='') {
-                swal('请输入详细地址');
+                swal('Please input address');
                 return false
             }
             var address = resProvince +resCity+resCounty + String(addressText);
@@ -190,11 +167,11 @@ $(document).ready(function() {
                     if (data.status == 1) {
                         //swal('注册成功', "","success");
                         swal({
-                                title: "注册成功",
+                                title: "Register Successfully",
                                 text: "",
                                 type: "success",
                                 confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "确定",
+                                confirmButtonText: "Confirm",
                                 closeOnConfirm: false
                             }, function() {
                                 window.location.href = "http://ndac.env.tsinghua.edu.cn/app/Engpage/login_en.html";
@@ -210,7 +187,7 @@ $(document).ready(function() {
                     $('#sign-up-btn').css({"background": "#388e3c"});
                 },
                 error: function () {
-                    swal('对不起，当前服务器开小差，请稍候再试', '', "error")
+                    swal('Sorry, please retry later', '', "error")
                 }
 
             });
@@ -242,7 +219,7 @@ $(document).ready(function() {
                                 identity: data.data.identity
                             };
                             $.cookie('cookie_info', JSON.stringify(cookie_info));
-                            window.location.href = "user_center.html";
+                            window.location.href = "user_center_en.html";
 
                         } else {
                             swal("error", data.info, "error");
@@ -258,7 +235,7 @@ $(document).ready(function() {
                 })
 
             }else{
-                swal("请输入用户名和密码");
+                swal("Please input username and password.");
                 return false;
             }
 
