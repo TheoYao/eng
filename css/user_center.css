@@ -33,7 +33,7 @@ ul,li{ padding:0;margin:0;list-style:none}
 }
 
 .navbar .logo-icon{
-    width: 610px;
+    width: 800px;
     display: inline-block;
 }
 
@@ -62,7 +62,7 @@ ul,li{ padding:0;margin:0;list-style:none}
 
 .navbar .top-func-area {
     padding-top: 50px;
-    width: 360px;
+    width: 150px;
     display: inline-block;
     vertical-align: top;
     text-align:right;
