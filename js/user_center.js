@@ -175,7 +175,7 @@ $(document).ready(function() {
     $('#modal-add-author').on('click', function () {
         var emailReg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
         var addName = $.trim($('#summary_input_more_author_name').val());
-        var addPing = $.trim($('#summary_input_more_spell').val());
+        //var addPing = $.trim($('#summary_input_more_spell').val());
         var addEmail = $.trim($('#summary_input_more_email').val());
         var addCompany = $.trim($('#summary_input_more_unit').val());
         var isCommuAuthor =document.getElementById("toggle-button").checked;
@@ -195,7 +195,7 @@ $(document).ready(function() {
         if(isCommuAuthor){
             addName = addName + "(Corresponding)"
         }
-        $('.more-author-list').append('<span class="more-author-item" data-name='+addName+' data-ping='+addPing+' data-email='+addEmail+' data-company='+addCompany+'>'+addName+'</span>')
+        $('.more-author-list').append('<span class="more-author-item" data-name='+addName+' data-email='+addEmail+' data-company='+addCompany+'>'+addName+'</span>')
         if (!$("#more-author-show").attr("value")) {
             $('#more-author-show').attr("value", addName)
         }
@@ -207,7 +207,7 @@ $(document).ready(function() {
     });
     function clearModal() {
         $('#summary_input_more_author_name').val("");
-        $('#summary_input_more_spell').val("");
+        //$('#summary_input_more_spell').val("");
         $('#summary_input_more_email').val("");
         $('#summary_input_more_unit').val("");
         document.getElementById("toggle-button").checked = false;
@@ -333,7 +333,7 @@ $(document).ready(function() {
             return false
         }
 
-        var userId = $.trim($('#personal_info_input_stuno').val());
+        //var userId = $.trim($('#personal_info_input_stuno').val());
 
         var docName = $.trim($('#personal_info_input_docno').val());
         if(docName=='') {
@@ -463,13 +463,13 @@ $(document).ready(function() {
         var info_center_table = $('#info-center-table');
 
         if (info_center_table.children().length == 0) {
-            info_center_table.append($("<div class=\"manu-item manu-item-even\"><div class=\"manu-item-title\">暂无消息</div></div>"))
+            info_center_table.append($("<div class=\"manu-item manu-item-even\"><div class=\"manu-item-title\">Empty</div></div>"))
         }
 
         var manu_check_table = $('#manu-check-table');
         if (manu_check_table.children().length == 0) {
             manu_check_table.attr("isPost", "0");
-            manu_check_table.append($("<div class=\"manu-item manu-item-even\"><div class=\"manu-item-title\">暂无稿件</div></div>"))
+            manu_check_table.append($("<div class=\"manu-item manu-item-even\"><div class=\"manu-item-title\">Empty</div></div>"))
         }
         else {
             manu_check_table.attr("isPost", "1");
@@ -502,7 +502,7 @@ $(document).ready(function() {
                     $(modal_value[4]).text(curData["keyEnglish"]);
                     $(modal_value[5]).text(curData["theme"]);
                     $(modal_value[6]).text(curData["create_time"]);
-                    var manuStatus = "未知";
+                    var manuStatus = "NULL";
                     switch(curData["status"]) {
                         case "1":
                             manuStatus = "Submit";

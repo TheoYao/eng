@@ -7,7 +7,7 @@ $(document).ready(function() {
             return
         }
 
-        window.location.href = "user_center_en.html?time=20180507.html"
+        window.location.href = "user_center_en.html?time=1526202842.html"
     }
     //tab切换
     var url = "http://ndac.env.tsinghua.edu.cn/app/index.php/";
@@ -152,10 +152,8 @@ $(document).ready(function() {
                     sex: sex,
                     birthDate: birthDate,
                     school: school,
-                    userID: userId,
                     stuName: stuName,
                     docName: docName,
-                    phone: phone,
                     address: address
                 },
                 dataType: 'json',
