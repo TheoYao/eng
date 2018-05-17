@@ -7,7 +7,7 @@ $(document).ready(function() {
         var identity =JSON.parse($.cookie('cookie_info')).identity;
 
     }else {
-        //window.location.href = "login_en.html#signin"
+        window.location.href = "login_en.html#signin"
     }
     if(identity.indexOf('audit') == -1){
         $("#audit-nav-button").remove()
