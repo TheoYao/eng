@@ -60,7 +60,16 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
     color: #666;
 }
 
+.loginContentTitle a:hover{
+    text-decoration: none;
+}
+
+.loginContentTitle a{
+    text-decoration: none;
+}
+
 .loginContentTitle .active{
+    text-decoration: none;
     color: #009900;
     font-weight: 600;
     border-bottom: 2px solid #009900;

@@ -3,11 +3,11 @@ $(document).ready(function() {
     var username = '';
     var identity = '';
     if($.cookie('cookie_info')){
-        var username =JSON.parse($.cookie('cookie_info')).username;
-        var identity =JSON.parse($.cookie('cookie_info')).identity;
+        username =JSON.parse($.cookie('cookie_info')).username;
+        identity =JSON.parse($.cookie('cookie_info')).identity;
 
     }else {
-        // window.location.href = "login_en.html#signin"
+        window.location.href = "login_en.html#signin"
     }
     if(identity.indexOf('audit') == -1){
         $("#audit-nav-button").remove()
@@ -460,16 +460,11 @@ $(document).ready(function() {
 
 
     function IsInfoTableEmpty(){
-        var info_center_table = $('#info-center-table');
 
-        if (info_center_table.children().length == 0) {
-            info_center_table.append($("<div class=\"manu-item manu-item-even\"><div class=\"manu-item-title\">Empty</div></div>"))
-        }
 
         var manu_check_table = $('#manu-check-table');
         if (manu_check_table.children().length == 0) {
             manu_check_table.attr("isPost", "0");
-            manu_check_table.append($("<div class=\"manu-item manu-item-even\"><div class=\"manu-item-title\">Empty</div></div>"))
         }
         else {
             manu_check_table.attr("isPost", "1");
@@ -479,6 +474,9 @@ $(document).ready(function() {
 
     $('.manu-check-area').on('click', "div.manu-item", function() {
         var docuid = $(this).attr("docuid");
+        if(!docuid) {
+            return
+        }
         $.ajax({
             type: "POST",
             url:  url +"Document/showById",
@@ -498,10 +496,10 @@ $(document).ready(function() {
                     $('#manuDetailModal').modal()
                     var modal_value = $(".detail-modal-content");
                     $(modal_value[0]).text(curData["docu_id"]);
-                    $(modal_value[2]).text(curData["englishTitle"]);
-                    $(modal_value[4]).text(curData["keyEnglish"]);
-                    $(modal_value[5]).text(curData["theme"]);
-                    $(modal_value[6]).text(curData["create_time"]);
+                    $(modal_value[1]).text(curData["englishTitle"]);
+                    $(modal_value[2]).text(curData["keyEnglish"]);
+                    $(modal_value[3]).text(curData["theme"]);
+                    $(modal_value[4]).text(curData["create_time"]);
                     var manuStatus = "NULL";
                     switch(curData["status"]) {
                         case "1":
@@ -520,9 +518,9 @@ $(document).ready(function() {
                             manuStatus = "Refused";
                             break;
                     }
-                    $(modal_value[7]).text(manuStatus);
-                    $(modal_value[8]).text(curData["audit_opinion"] || "Null");
-                    $(modal_value[9]).html("<span id=\"download_abstract\" docuid="+curData["filename"]+"><a>Download</a></span>");
+                    $(modal_value[5]).text(manuStatus);
+                    $(modal_value[6]).text(curData["audit_opinion"] || "Null");
+                    $(modal_value[7]).html("<span id=\"download_abstract\" docuid="+curData["filename"]+"><a>Download</a></span>");
                 } else {
                     console.log(res.info);
                 }

@@ -121,7 +121,7 @@ $(document).ready(function() {
 
             var birthDate = $('#sign-up-birthday').val();
 
-            var school = $('#sign-up-school option:selected').val();
+            var school = $.trim($('#sign-up-school').val());
             if(school=='') {
                 swal('Please input school');
                 return false
@@ -140,7 +140,7 @@ $(document).ready(function() {
                 swal('Please input address');
                 return false
             }
-            var address = resProvince +resCity+resCounty + String(addressText);
+            var address = String(addressText);
 
             $.ajax({
                 type: "POST",

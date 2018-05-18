@@ -253,7 +253,7 @@ color: #FFFFFF;
 
 .conference-topic .cft-topic-list {
     position: relative;
-    margin-top: 450px;
+    margin-top: 480px;
 }
 
 .conference-topic .cfr-topic-item{
@@ -329,7 +329,7 @@ color: #FFFFFF;
 
 
 .count-down {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .clock-label {
