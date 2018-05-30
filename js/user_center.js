@@ -86,7 +86,7 @@ $(document).ready(function() {
                     $("#personal_info_input_username").attr("value", curData["username"]);
                     $("#personal_info_input_mail").attr("value", curData["email"]);
                     $("#personal_info_input_name").attr("value", curData["stuName"]);
-                    if (curData["sex"] == "Male") {
+                    if (curData["sex"] == "Ma") {
                         $("button[data-id='personal_info_input_sex']").attr("title", "Male");
                         $("button[data-id='personal_info_input_sex'] .filter-option").text("Male")
                     }
