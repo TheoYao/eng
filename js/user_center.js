@@ -7,10 +7,7 @@ $(document).ready(function() {
         identity =JSON.parse($.cookie('cookie_info')).identity;
 
     }else {
-        window.location.href = "login_en.html#signin"
-    }
-    if(identity.indexOf('audit') == -1){
-        $("#audit-nav-button").remove()
+        window.location.href = "login_en.html#signin";
     }
     //出生日期
     $('.form_datetime').datetimepicker({
@@ -90,9 +87,13 @@ $(document).ready(function() {
                         $("button[data-id='personal_info_input_sex']").attr("title", "Male");
                         $("button[data-id='personal_info_input_sex'] .filter-option").text("Male")
                     }
-                    else{
+                    else if (curData["sex"] == "Fe"){
                         $("button[data-id='personal_info_input_sex']").attr("title", "Female");
                         $("button[data-id='personal_info_input_sex'] .filter-option").text("Female")
+                    }
+                    else {
+                        $("button[data-id='personal_info_input_sex']").attr("title", "");
+                        $("button[data-id='personal_info_input_sex'] .filter-option").text("")
                     }
 
                     $("#personal_info_input_birth").attr("value", curData["birthDate"]);
@@ -104,6 +105,10 @@ $(document).ready(function() {
                     /*填充tips*/
                     $("#school_name").text(curData["school"]);
                     $("#person_name").text(curData["stuName"]);
+                    if (curData["school"] == "" || curData["stuName"] == "") {
+                        $(".welcome-tips-item").remove();
+                    };
+
                 } else {
                     swal(data.info);
                     return false;
@@ -116,10 +121,10 @@ $(document).ready(function() {
             error: function () {
                 swal('Sorry, Please retry later', '', "error")
             }
-
         });
     }
 
+    var isAbstractAc = false;
     contribution(username);
     function contribution(username) {
         //请求稿件查询列表
@@ -138,6 +143,9 @@ $(document).ready(function() {
                     var data = res.data;
                     var ele =$('#manu-check-table');
                     if(data.length>0) {
+                        if (data[0].status==3) {
+                            isAbstractAc = true;
+                        }
                         renderManuList(data);
                     }
                     else{
@@ -173,7 +181,7 @@ $(document).ready(function() {
 
     //添加更多作者
     $('#modal-add-author').on('click', function () {
-        var emailReg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        var emailReg=/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
         var addName = $.trim($('#summary_input_more_author_name').val());
         //var addPing = $.trim($('#summary_input_more_spell').val());
         var addEmail = $.trim($('#summary_input_more_email').val());
@@ -183,7 +191,6 @@ $(document).ready(function() {
             alert('Please input name');
             return false
         }
-
         if(addEmail==''||!(emailReg.test(addEmail))){
             alert('Plese input email');
             return false
@@ -220,7 +227,7 @@ $(document).ready(function() {
     });
 
     $('#btn-submit-summary').on('click', function () {
-        var emailReg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        var emailReg=/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
         var fileSrc = $("input[name=fileString]")[0].files[0];
         var englishTitle = $.trim($('#summary_input_egls_title').val());
         var keyEnglish = $.trim($('#summary_input_egls_kwd').val());
@@ -250,9 +257,8 @@ $(document).ready(function() {
         var fileAccept = fileArray[fileArray.length - 1]
         if( fileAccept!="doc" && fileAccept!="docx" ){
             swal("Only .doc and .docx allowed！");
+            return false
         }
-
-
         if(authorName==''){
             swal('Please input name');
             return false
@@ -407,7 +413,7 @@ $(document).ready(function() {
             return false;
         }
         if(newPwd.length<6 || newPwd == ''){
-           swal('Please input new password longer than 6');
+            swal('Please input new password longer than 6');
             return false;
         }
         if(cPwd != newPwd || cPwd==''){
@@ -436,12 +442,12 @@ $(document).ready(function() {
                     success: function (data) {
                         if (data.status == 1) {
                             swal({
-                                    title: "Success",
-                                    type: "success",
-                                    confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "Yes",
-                                    closeOnConfirm: false
-                                }, function() {
+                                title: "Success",
+                                type: "success",
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Yes",
+                                closeOnConfirm: false
+                            }, function() {
                                 $.cookie('cookie_info', '', {expires: -1});
                                 window.location.href = "http://ndac.env.tsinghua.edu.cn/app/Engpage/login_en.html";
                             })
@@ -460,8 +466,6 @@ $(document).ready(function() {
 
 
     function IsInfoTableEmpty(){
-
-
         var manu_check_table = $('#manu-check-table');
         if (manu_check_table.children().length == 0) {
             manu_check_table.attr("isPost", "0");
@@ -509,17 +513,21 @@ $(document).ready(function() {
                             manuStatus = "To Audit";
                             break;
                         case "3":
-                            manuStatus = "";
+                            manuStatus = "Accepted";
                             break;
                         case "4":
-                            manuStatus = "";
-                            break;
-                        case "5":
-                            manuStatus = "Refused";
+                            manuStatus = "Rejected";
                             break;
                     }
                     $(modal_value[5]).text(manuStatus);
-                    $(modal_value[6]).text(curData["audit_opinion"] || "Null");
+                    $(modal_value[6]).text("Null");
+                    if (curData["audit_opinion"]) {
+                        var trans_audit_opinion = JSON.parse(curData["audit_opinion"]);
+                        if (trans_audit_opinion) {
+                            $(modal_value[6]).text(trans_audit_opinion["comment_text"]);
+                        }
+
+                    }
                     $(modal_value[7]).html("<span id=\"download_abstract\" docuid="+curData["filename"]+"><a>Download</a></span>");
                 } else {
                     console.log(res.info);
@@ -532,4 +540,252 @@ $(document).ready(function() {
         var cid = $(this).attr("docuid");
         window.open('http://ndac.env.tsinghua.edu.cn' + '/app/data/'+cid);
     });
+
+    $('#acco_input_acco').on('changed.bs.select',function(e){
+        if ($("button[data-id='acco_input_acco']").attr("title") == "Yes") {
+            $("#is_acco_area").show();
+        }
+        else {
+            $("#is_acco_area").hide();
+        }
+    });
+
+    $('#reimburse_input_air').on('changed.bs.select',function(e){
+        if ($("button[data-id='reimburse_input_air']").attr("title") == "Yes") {
+            $("#is_air_area").show();
+            $("#is_railway_area").hide();
+        }
+        else {
+            $("#is_railway_area").show();
+            $("#is_air_area").hide();
+        }
+    });
+
+    $('.user-nav-bottom-item,.user-nav-item')
+        .click(
+            function(){
+                var id_array = ($(this).attr("id")).split("-");
+                var index = parseInt(id_array[id_array.length - 1]);
+
+                if (index > 2 && index < 5) {
+                    return
+                }
+
+
+                if (index == 1) {
+                    var manu_list = $("#manu-check-table");
+                    if (manu_list.attr("isPost") != "0"){
+                        swal("Sorry, you have submited.");
+                        return
+                    }
+                }
+                if (index == 2) {
+                    if (!isAbstractAc) {
+                        swal("Your manuscript has not been accepted yet", "Please pay close attention to your remark");
+                        return;
+                    }
+                }
+                for (i = 0; i < 7; i++) {
+                    var x = $("#user-center-show-body-"+i);
+                    if (i == index) {
+                        x.show()
+                    }
+                    else {
+                        x.hide()
+                    }
+                    if (i >= 1 && i <= 4) {
+                        var y = $("#user-nav-item-"+i);
+                        if (i==index) {
+                            y.addClass("active")
+                        }
+                        else {
+                            y.removeClass("active")
+                        }
+                    }
+                    else if(i>4) {
+                        var y=$("#user-nav-bottom-item-"+i);
+                        if (i==index) {
+                            y.addClass("user-nav-bottom-item-active")
+                        }
+                        else {
+                            y.removeClass("user-nav-bottom-item-active")
+                        }
+                    }
+                }
+                if (index == 2) {
+                    if (isFulltextSubmit) {
+                        return
+                    }
+                    index2Cal();
+                }
+            }
+        );
+
+    var isFulltextSubmit = false;
+    var isFulltextPostBoth = false;
+    function index2Cal() {
+        isFulltextPostBoth = false;
+        $('#oral_report_area').hide();
+        swal(
+            {
+                title: "Will you give an oral presentation?",
+                type: "warning",
+                text: "If you have any questions, please email to ndac@tsinghua.edu.cn for consultation.",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            }, function(){
+                isFulltextPostBoth = true;
+                $('#oral_report_area').show();
+                return true;
+            });
+    };
+
+    $('#btn-submit-fulltext').on('click', function () {
+        var filePoster = $("input[name=filePoster]")[0].files[0];
+        var fileFulltext = $("input[name=fileFulltext]")[0].files[0];
+        if (filePoster == undefined) {
+            swal('Please Upload Poster');
+            return;
+        }
+
+        if (isFulltextPostBoth && fileFulltext == undefined) {
+            swal('Please Upload Fulltext');
+            return;
+        }
+
+
+        var isRecoVol = $("button[data-id='fulltext_reco_vol']").attr("title");
+        if(isRecoVol=='Please Choose') {
+            swal('Please Choose to Open to Fulltext Set');
+            return false
+        }
+
+
+        var isRecoCol = $("button[data-id='fulltext_reco_col']").attr("title");
+        if(isRecoCol=='FESE: Frontiers of Environmental Science & Engineering') {
+            swal('Please Choose to Recomend to FESE');
+            return false
+        }
+
+
+        var filePosterName = filePoster.name.split(".");//获取上传文件的后缀
+        var filePosterSuf = filePosterName[filePosterName.length - 1];
+        if( filePosterSuf!="pptx" && filePosterSuf!="ppt" ){
+            swal("Only Poster With Format of pptx and ppt Allowed！");
+            return
+        }
+        if(filePoster.name != "poster.ppt" && filePoster.name != "poster.pptx") {
+            swal("Please Rename Poster to poster.ppt or poster.pptx！");
+            return
+        }
+
+        var isFull = "false";
+
+        if (isFulltextPostBoth) {
+            var fileFulltextName = fileFulltext.name.split(".");//获取上传文件的后缀
+            var fileFulltextSuf = fileFulltextName[fileFulltextName.length - 1];
+            if( fileFulltextSuf!="doc" && fileFulltextSuf!="docx" ){
+                swal("Only Fulltext With Format of docx and doc Allowed！");
+                return
+            }
+            if(fileFulltext.name != "fulltext.docx" && fileFulltext.name != "fulltext.doc") {
+                swal("Please Rename fulltext to fulltext.doc or fulltext.docx！");
+                return
+            }
+            isFull = "true";
+        }
+
+
+        swal(
+            {
+                title: "Conform to submit?",
+                text: "Only one manuscript can be uploaded, and forbidden to modify",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmation",
+                closeOnConfirm: false
+            }, function(){
+                var data = new FormData();
+                data.append('username', username);
+                data.append('poster', filePoster);
+                data.append('fulltext', fileFulltext);
+                data.append('publish', isRecoCol);
+                data.append('recommend', isRecoVol);
+                data.append('isFull', isFull);
+
+                $.ajax({
+                    type: "POST",
+                    url: url +"Document/submitDetail",
+                    data: data,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            swal("Success！", "", "success");
+                            window.location.reload();
+                        } else {
+                            swal("Error", data.info, "error");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        swal('Sorry, Please retry later', '', "error");
+                    }
+                })
+            });
+    });
+
+    fullText(username);
+    function fullText(username) {
+        //请求稿件查询列表
+        $.ajax({
+            type: "Get",
+            url:  url +"Document/getDetail?username=" + username,
+            /*
+            data: {
+                username: username,
+                type: 'all'
+            },
+            */
+            /*type: "GET",
+            url: "./json/show_product.json",*/
+            dataType: 'json',
+            success: function (res) {
+                if(res.status==1){
+                    var data = res.data;
+                    if (!data) {
+                        return
+                    }
+                    var area =$('#fulltext_uploaded');
+                    var upload_input_area=$('#fulltext_ready_upload');
+                    var ele =$('#fulltext_download_area');
+                    isFulltextSubmit = true;
+                    var htmlStr = "";
+                    if ("fulltext" in data) {
+                        if (data["fulltext"] != "") {
+                            htmlStr += "<p style=\"font-size: 20px;margin-top: 20px;\"><a href=\"http://ndac.env.tsinghua.edu.cn/"+ data["fulltext"] +"\">Fulltext（Download）</a></p>"
+                        }
+                    }
+                    if ("poster" in data) {
+                        if (data["poster"] != "") {
+                            htmlStr += "<p style=\"font-size: 20px;\"><a href=\"http://ndac.env.tsinghua.edu.cn/"+ data["poster"] +"\">Poster（Download）</a></p>"
+                        }
+                    }
+                    ele.html(htmlStr);
+                    upload_input_area.hide();
+                    area.show();
+
+                }
+            }
+
+        });
+
+
+    }
+
 });
