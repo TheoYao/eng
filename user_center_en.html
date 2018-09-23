@@ -347,46 +347,106 @@
                 <div id="user-center-show-body-3" class="user-center-index" style="display: none;">
                     <form class="user-contribute-deliver" enctype="multipart/form-data">
                         <div class="input-group input-group-self">
-                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>姓名：</span>
-                            <input type="text" class="form-control" placeholder="姓名" id="acco_input_name">
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Name：</span>
+                            <input type="text" class="form-control" placeholder="Name" id="acco_input_name">
                         </div>
                         <div class="input-group input-group-self">
-                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别：</span>
-                            <select class="selectpicker form-control" id="acco_input_sex" title="请选择">
-                                <option>男</option>
-                                <option>女</option>
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Gender：</span>
+                            <select class="selectpicker form-control" id="acco_input_sex" title="Please Choose">
+                                <option>Male</option>
+                                <option>Female</option>
                             </select>
                         </div>
                         <div class="input-group input-group-self">
-                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>学校：</span>
-                            <input type="text" class="form-control" placeholder="请输入学校" id="acco_input_school">
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>University：</span>
+                            <input type="text" class="form-control" placeholder="University" id="acco_input_school">
                         </div>
                         <div class="input-group input-group-self">
-                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;是否穆斯林：</span>
-                            <select class="selectpicker form-control" id="acco_input_muslim" title="请选择">
-                                <option>是</option>
-                                <option>否</option>
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Country/Region：</span>
+                            <select class="selectpicker form-control" id="acco_input_area" title="Please Choose">
+                                <option>Mainland China</option>
+                                <option>Hong Kong, China</option>
+                                <option>Macao, China</option>
+                                <option>Taiwan, China</option>
+                                <option>Others</option>
+                            </select>
+                        </div>
+                        <span id="is_acco_implement_area" style="display: none;">
+                            <div class="input-group input-group-self">
+                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Other Country/Region：</span>
+                                <input type="text" class="form-control" placeholder="Please specify" id="acco_input_more_area">
+                            </div>
+                        </span>
+                        <div class="input-group input-group-self">
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Dietary Requirements：</span>
+                            <select class="selectpicker form-control" id="acco_input_meal" title="Please choose">
+                                <option>Halal</option>
+                                <option>Vegetarian</option>
+                                <option>Other, please specify</option>
+                                <option>None</option>
+                            </select>
+                        </div>
+                        <span id="meal_more_area" style="display: none;">
+                            <div class="input-group input-group-self">
+                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Dietary Detail：</span>
+                                <input type="text" class="form-control" placeholder="Please specify" id="acco_input_meal_more">
+                            </div>
+
+                        </span>
+                        <div class="input-group input-group-self">
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Will attend the tour to THU?</span>
+                            <select class="selectpicker form-control" id="acco_input_school_travel" title="4pm-5pm, Oct. 17">
+                                <option>Yes</option>
+                                <option>No</option>
                             </select>
                         </div>
                         <div class="input-group input-group-self">
-                            <span class="input-group-addon summary_submit_field">是否需要住宿：</span>
-                            <select class="selectpicker form-control" id="acco_input_acco" title="请选择">
-                                <option>是</option>
-                                <option>否</option>
+                            <span class="input-group-addon summary_submit_field"><span class="necessary-tips">*</span>Will attend the welcome reception?</span>
+                            <select class="selectpicker form-control" id="acco_input_eve_party" title="6pm-8:30pm, Oct. 18">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group-self">
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Will attend the field trip?</span>
+                            <select class="selectpicker form-control" id="acco_input_field_trip" title="To OriginWater Technology Co., Ltd, daytime, Oct. 19">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group-self">
+                            <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Require accommodation?</span>
+                            <select class="selectpicker form-control" id="acco_input_acco" title="Only available for delegates from outside Beijing.">
+                                <option>Yes</option>
+                                <option>No</option>
                             </select>
                         </div>
                         <span id="is_acco_area" style="display: none;">
                             <div class="input-group input-group-self">
-                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>身份证号：</span>
-                                <input type="text" class="form-control" placeholder="请输入身份证号" id="acco_input_id">
+                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>ID Type：</span>
+                                <select class="selectpicker form-control" id="acco_input_id_type" title="Please Choose">
+                                    <option>Resident Identity Card (PRC)</option>
+                                    <option>Mainland Travel Permit for Hong Kong and Macao Residents</option>
+                                    <option>Mainland Travel Permit for Taiwan Residents</option>
+                                    <option>Passport</option>
+                                </select>
                             </div>
                             <div class="input-group input-group-self">
-                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>手机号：</span>
-                                <input type="text" class="form-control" placeholder="请输入手机号" id="acco_input_mobile">
+                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>ID Number：</span>
+                                <input type="text" class="form-control" placeholder="Please input" id="acco_input_id_num">
                             </div>
                             <div class="input-group input-group-self">
-                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出生年月：</span>
-                                <input type="text" class="form_datetime form-control" id="acco_input_birthday">
+                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Mobile No.：</span>
+                                <input type="text" class="form-control" placeholder="Please input" id="acco_input_mobile">
+                            </div>
+                            <div class="input-group input-group-self">
+                                <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>Dates of Stay(at hotel)：</span>
+                                    <select class="selectpicker form-control" id="acco_input_board_dates" title="Please select all that apply:" multiple>
+                                    <option>October 17</option>
+                                    <option>October 18</option>
+                                    <option>October 19</option>
+                                    <option>October 20</option>
+                                </select>
                             </div>
                         </span>
 
@@ -425,8 +485,8 @@
                         <div class="input-group input-group-self">
                             <span class="input-group-addon summary_submit_field">&nbsp;&nbsp;&nbsp;<span class="necessary-tips">*</span>是否机票：</span>
                             <select class="selectpicker form-control" id="reimburse_input_air" title="请选择">
-                                <option>是</option>
-                                <option>否</option>
+                                <option>Yes</option>
+                                <option>No</option>
                             </select>
                         </div>
 

@@ -567,7 +567,7 @@ $(document).ready(function() {
                 var id_array = ($(this).attr("id")).split("-");
                 var index = parseInt(id_array[id_array.length - 1]);
 
-                if (index > 2 && index < 5) {
+                if (index > 3 && index < 5) {
                     return
                 }
 
@@ -582,6 +582,12 @@ $(document).ready(function() {
                 if (index == 2) {
                     if (!isAbstractAc) {
                         swal("Your manuscript has not been accepted yet", "Please pay close attention to your remark");
+                        return;
+                    }
+                }
+                if (index == 3) {
+                    if(!isFulltextSubmit) {
+                        swal("Sorry, please submit fulltext firstly.");
                         return;
                     }
                 }
@@ -784,8 +790,380 @@ $(document).ready(function() {
             }
 
         });
+    }
+
+    $('#btn-submit-acco').on('click', function () {
+        var name = $.trim($('#acco_input_name').val());
+        if(name=='') {
+            swal('Please input name');
+            return false
+        }
+        var sex = $.trim($('#acco_input_sex').val());
+        if(sex=='') {
+            swal('Please input gender');
+            return false
+        }
+        var school = $.trim($('#acco_input_school').val());
+        if(school=='') {
+            swal('Please input university');
+            return false
+        }
+
+        var area_name = $("button[data-id='acco_input_area']").attr("title");
+        var area_more = $.trim($('#acco_input_more_area').val());
+        if(area_name=='Please choose') {
+            swal('Please choose the country/area');
+            return false
+        }
+        if(area_name=='Others') {
+            if (area_more == "") {
+                swal('Please input detailed country/area name');
+                return false
+            }
+        }
+
+        var meal = $("button[data-id='acco_input_meal']").attr("title");
+        var meal_more = $.trim($('#acco_input_meal_more').val());
+        if(meal=='Please choose') {
+            swal('Please choose dietary requirements');
+            return false
+        }
+        if(meal=='Other, please specify') {
+            if (meal_more == "") {
+                swal('Please specify dietary requirements');
+                return false
+            }
+            meal = meal+";"+meal_more
+        }
+
+        var schoolTravel = $("button[data-id='acco_input_school_travel']").attr("title");
+        if(schoolTravel=='4pm-5pm, Oct. 17') {
+            swal('Please choose whether to attend the tour to THU');
+            return false
+        }
+
+        var eveParty = $("button[data-id='acco_input_eve_party']").attr("title");
+        if(eveParty=='6pm-8:30pm, Oct. 18') {
+            swal('Please choose whether to attend the welcome reception');
+            return false
+        }
+
+        var fieldTrip = $("button[data-id='acco_input_field_trip']").attr("title");
+        if(fieldTrip=='To OriginWater Technology Co., Ltd, on morning and afternoon, Oct. 19') {
+            swal('Please choose whether to attend field trip');
+            return false
+        }
+
+        var accoChoice = $("button[data-id='acco_input_acco']").attr("title");
+        if(accoChoice=='Only available for delegates from outside Beijing.') {
+            swal('Please choose whether to Require accommodation');
+            return false
+        }
+        var idType = "";
+        var idNum  = "";
+        var mobile = "";
+        var boardDates = "";
+
+        if(accoChoice=='Yes') {
+            idType = $.trim($('#acco_input_id_type').val());
+            if(idType=='') {
+                swal('Please choose id type');
+                return false
+            }
+            idNum = $.trim($('#acco_input_id_num').val());
+            if(idNum=='') {
+                swal('Please input id num');
+                return false
+            }
+            mobile = $.trim($('#acco_input_mobile').val());
+            if(mobile=='') {
+                swal('Please input mobile No.');
+                return false
+            }
+            boardDates = $("button[data-id='acco_input_board_dates']").attr("title");
+            if(boardDates=='Please select all that apply:') {
+                swal('Please select dates of stay');
+                return false
+            }
+        }
+
+
+        swal(
+            {
+                title: "Confirm to submit？",
+                text: "Only one manuscript can be uploaded, and forbidden to modify",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmation",
+                closeOnConfirm: false
+            }, function(){
+                var data = new FormData();
+                data.append('username', username);
+                data.append('name', name);
+                data.append('sex', sex);
+                data.append('school', school);
+                data.append('area', area_name);
+                data.append('area_more', area_more);
+                data.append('is_muslim', meal);
+                data.append('is_school_travel', schoolTravel);
+                data.append('is_eve_party', eveParty);
+                data.append('is_field_trip', fieldTrip);
+                data.append('is_acco', accoChoice);
+                data.append('id_type', idType);
+                data.append('id_num', idNum);
+                data.append('mobile', mobile);
+                data.append('board_dates', boardDates);
+
+
+                $.ajax({
+                    type: "POST",
+                    url: url +"Document/addRegisterInfo",
+                    data: data,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            swal("Success！", "", "success");
+                            window.location.reload();
+                        } else {
+                            swal("Error", data.info, "error");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        swal('Sorry, Please retry later', '', "error");
+                    }
+                })
+            });
+    });
+
+    registerInfo(username);
+    function registerInfo(username) {
+        //请求稿件查询列表
+        $.ajax({
+            type: "Get",
+            url:  url +"Document/getRegisterInfo?username=" + username,
+            //url:  "./json/register.json",
+            dataType: 'json',
+            success: function (res) {
+                if(res){
+                    $('.selectpicker').selectpicker('refresh');
+                    var curData = res;
+                    if (!curData) {
+                        return
+                    }
+                    var nameEle =$('#acco_input_name');
+                    var sexEle=$('#acco_input_sex');
+                    var schoolEle =$('#acco_input_school');
+                    var areaEle=$('#acco_input_area');
+                    var areaMoreEle =$('#acco_input_more_area');
+                    var isMuslimEle=$('#acco_input_meal');
+                    var isMuslimMoreEle=$('#acco_input_meal_more');
+                    var isSchoolTravelEle =$('#acco_input_school_travel');
+                    var isEvePartyEle=$('#acco_input_eve_party');
+                    var isFieldTripEle =$('#acco_input_field_trip');
+                    var isAccoEle=$('#acco_input_acco');
+                    var idTypeEle =$('#acco_input_id_type');
+                    var idNumEle=$('#acco_input_id_num');
+                    var mobileEle =$('#acco_input_mobile');
+                    var boardDatesEle=$('#acco_input_board_dates');
+
+
+
+                    nameEle.attr("value", curData["name"]);
+                    if (curData["sex"] == "Ma") {
+                        $("button[data-id='acco_input_sex']").attr("title", "Male");
+                        $("button[data-id='acco_input_sex'] .filter-option").text("Male")
+                    }
+                    else if (curData["sex"] == "Fe"){
+                        $("button[data-id='acco_input_sex']").attr("title", "Female");
+                        $("button[data-id='acco_input_sex'] .filter-option").text("Female")
+                    }
+                    else {
+                        $("button[data-id='acco_input_sex']").attr("title", "");
+                        $("button[data-id='acco_input_sex'] .filter-option").text("")
+                    }
+                    schoolEle.attr("value", curData["school"]);
+                    if (curData["area"] == "Mainland China") {
+                        $("button[data-id='acco_input_area']").attr("title", "Mainland China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Mainland China")
+                    }
+                    else if (curData["area"] == "Hong Kong, China"){
+                        $("button[data-id='acco_input_area']").attr("title", "Hong Kong, China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Hong Kong, China");
+                    }
+                    else if (curData["area"] == "Macao, China"){
+                        $("button[data-id='acco_input_area']").attr("title", "Macao, China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Macao, China");
+                    }
+                    else if (curData["area"] == "Taiwan, China"){
+                        $("button[data-id='acco_input_area']").attr("title", "Taiwan, China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Taiwan, China");
+                    }
+                    else if (curData["area"] == "Others"){
+                        $("button[data-id='acco_input_area']").attr("title", "Others");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Others");
+
+                        areaMoreEle.attr("value", curData["area_more"]);
+                        $("#is_acco_implement_area").show()
+                    }
+
+
+                    var is_muslim = curData["is_muslim"].split(";")[0];
+                    if (is_muslim == "Halal") {
+                        $("button[data-id='acco_input_meal']").attr("title", "Halal");
+                        $("button[data-id='acco_input_meal'] .filter-option").text("Halal")
+                    }
+                    else if (is_muslim == "Vegetarian"){
+                        $("button[data-id='acco_input_meal']").attr("title", "Vegetarian");
+                        $("button[data-id='acco_input_meal'] .filter-option").text("Vegetarian")
+                    }
+                    else if (is_muslim == "Other, please specify"){
+                        $("button[data-id='acco_input_meal']").attr("title", "Other, please specify");
+                        $("button[data-id='acco_input_meal'] .filter-option").text("Other, please specify");
+
+                        if (curData["is_muslim"].split(";").length > 1) {
+                            isMuslimMoreEle.attr("value", curData["is_muslim"].split(";")[1]);
+                            $("#meal_more_area").show()
+                        }
+
+                    }
+                    else if (is_muslim == "None"){
+                        $("button[data-id='acco_input_meal']").attr("title", "None");
+                        $("button[data-id='acco_input_meal'] .filter-option").text("None")
+                    }
+
+
+                    if (curData["is_school_travel"] == "Yes") {
+                        $("button[data-id='acco_input_school_travel']").attr("title", "Yes");
+                        $("button[data-id='acco_input_school_travel'] .filter-option").text("Yes")
+                    }
+                    else if (curData["is_school_travel"] == "No"){
+                        $("button[data-id='acco_input_school_travel']").attr("title", "No");
+                        $("button[data-id='acco_input_school_travel'] .filter-option").text("No")
+                    } else {
+                        $("button[data-id='acco_input_school_travel']").attr("title", "");
+                        $("button[data-id='acco_input_school_travel'] .filter-option").text("")
+                    }
+
+
+                    if (curData["is_eve_party"] == "Yes") {
+                        $("button[data-id='acco_input_eve_party']").attr("title", "Yes");
+                        $("button[data-id='acco_input_eve_party'] .filter-option").text("Yes")
+                    }
+                    else if (curData["is_eve_party"] == "No"){
+                        $("button[data-id='acco_input_eve_party']").attr("title", "No");
+                        $("button[data-id='acco_input_eve_party'] .filter-option").text("No")
+                    } else {
+                        $("button[data-id='acco_input_eve_party']").attr("title", "");
+                        $("button[data-id='acco_input_eve_party'] .filter-option").text("")
+                    }
+
+
+                    if (curData["is_field_trip"] == "Yes") {
+                        $("button[data-id='acco_input_field_trip']").attr("title", "Yes");
+                        $("button[data-id='acco_input_field_trip'] .filter-option").text("Yes")
+                    }
+                    else if (curData["is_field_trip"] == "No"){
+                        $("button[data-id='acco_input_field_trip']").attr("title", "No");
+                        $("button[data-id='acco_input_field_trip'] .filter-option").text("No")
+                    } else {
+                        $("button[data-id='acco_input_field_trip']").attr("title", "");
+                        $("button[data-id='acco_input_field_trip'] .filter-option").text("")
+                    }
+
+
+
+                    if (curData["is_acco"] == "Yes") {
+                        $("button[data-id='acco_input_acco']").attr("title", "Yes");
+                        $("button[data-id='acco_input_acco'] .filter-option").text("Yes")
+
+                        $("#is_acco_area").show();
+                        if (curData["id_type"] == "Resident Identity Card (PRC)") {
+                            $("button[data-id='acco_input_id_type']").attr("title", "Resident Identity Card (PRC)");
+                            $("button[data-id='acco_input_id_type'] .filter-option").text("Resident Identity Card (PRC)")
+                        }
+                        else if (curData["id_type"] == "Mainland Travel Permit for Hong Kong and Macao Residents"){
+                            $("button[data-id='acco_input_id_type']").attr("title", "Mainland Travel Permit for Hong Kong and Macao Residents");
+                            $("button[data-id='acco_input_id_type'] .filter-option").text("Mainland Travel Permit for Hong Kong and Macao Residents");
+                        }
+                        else if (curData["id_type"] == "Mainland Travel Permit for Taiwan Residents（台胞证）"){
+                            $("button[data-id='acco_input_id_type']").attr("title", "Mainland Travel Permit for Taiwan Residents");
+                            $("button[data-id='acco_input_id_type'] .filter-option").text("Mainland Travel Permit for Taiwan Residents");
+                        }
+                        else if (curData["id_type"] == "Passport"){
+                            $("button[data-id='acco_input_id_type']").attr("title", "Passport");
+                            $("button[data-id='acco_input_id_type'] .filter-option").text("Passport");
+                        }
+
+                        idNumEle.attr("value", curData["id_num"]);
+                        mobileEle.attr("value", curData["mobile"]);
+
+                        $("button[data-id='acco_input_board_dates']").attr("title", curData["board_dates"]);
+                        $("button[data-id='acco_input_board_dates'] .filter-option").text(curData["board_dates"])
+                    }
+                    else if (curData["is_acco"] == "No"){
+                        $("button[data-id='acco_input_acco']").attr("title", "No");
+                        $("button[data-id='acco_input_acco'] .filter-option").text("No")
+                    } else {
+                        $("button[data-id='acco_input_acco']").attr("title", "");
+                        $("button[data-id='acco_input_acco'] .filter-option").text("")
+                    }
+
+
+                    nameEle.attr('disabled',true);
+                    sexEle.attr('disabled',true);
+                    schoolEle.attr('disabled',true);
+                    areaEle.attr('disabled',true);
+                    areaMoreEle.attr('disabled',true);
+                    isMuslimEle.attr('disabled',true);
+                    isMuslimMoreEle.attr('disabled',true);
+                    isSchoolTravelEle.attr('disabled',true);
+                    isEvePartyEle.attr('disabled',true);
+                    isFieldTripEle.attr('disabled',true);
+                    isAccoEle.attr('disabled',true);
+                    idTypeEle.attr('disabled',true);
+                    idNumEle.attr('disabled',true);
+                    mobileEle.attr('disabled',true);
+                    boardDatesEle.attr('disabled',true);
+
+                    $("#btn-submit-acco").hide();
+
+                }
+            }
+
+        });
 
 
     }
+
+    $('#acco_input_acco').on('changed.bs.select',function(e){
+        if ($("button[data-id='acco_input_acco']").attr("title") == "Yes") {
+            $("#is_acco_area").show();
+        }
+        else {
+            $("#is_acco_area").hide();
+        }
+    });
+
+
+    $('#acco_input_area').on('changed.bs.select',function(e){
+        if ($("button[data-id='acco_input_area']").attr("title") == "Others") {
+            $("#is_acco_implement_area").show();
+        }
+        else {
+            $("#is_acco_implement_area").hide();
+        }
+    });
+
+
+    $('#acco_input_meal').on('changed.bs.select',function(e){
+        $("#meal_more_area").hide();
+        if ($("button[data-id='acco_input_meal']").attr("title") == "Other, please specify") {
+            $("#meal_more_area").show();
+        }
+    });
 
 });
