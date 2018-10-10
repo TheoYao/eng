@@ -828,7 +828,7 @@ $(document).ready(function() {
             swal('Please choose dietary requirements');
             return false
         }
-        if(meal=='Other, please specify') {
+        if(meal=='Other; please specify') {
             if (meal_more == "") {
                 swal('Please specify dietary requirements');
                 return false
@@ -891,7 +891,7 @@ $(document).ready(function() {
         swal(
             {
                 title: "Confirm to submit？",
-                text: "Only one manuscript can be uploaded, and forbidden to modify",
+                text: "Only once can be submitted, and forbidden to modify",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -973,11 +973,11 @@ $(document).ready(function() {
 
 
                     nameEle.attr("value", curData["name"]);
-                    if (curData["sex"] == "Ma") {
+                    if (curData["sex"] == "Male") {
                         $("button[data-id='acco_input_sex']").attr("title", "Male");
                         $("button[data-id='acco_input_sex'] .filter-option").text("Male")
                     }
-                    else if (curData["sex"] == "Fe"){
+                    else if (curData["sex"] == "Female"){
                         $("button[data-id='acco_input_sex']").attr("title", "Female");
                         $("button[data-id='acco_input_sex'] .filter-option").text("Female")
                     }
@@ -986,21 +986,21 @@ $(document).ready(function() {
                         $("button[data-id='acco_input_sex'] .filter-option").text("")
                     }
                     schoolEle.attr("value", curData["school"]);
-                    if (curData["area"] == "Mainland China") {
-                        $("button[data-id='acco_input_area']").attr("title", "Mainland China");
-                        $("button[data-id='acco_input_area'] .filter-option").text("Mainland China")
+                    if (curData["area"] == "Mainland; China") {
+                        $("button[data-id='acco_input_area']").attr("title", "Mainland; China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Mainland; China")
                     }
-                    else if (curData["area"] == "Hong Kong, China"){
-                        $("button[data-id='acco_input_area']").attr("title", "Hong Kong, China");
-                        $("button[data-id='acco_input_area'] .filter-option").text("Hong Kong, China");
+                    else if (curData["area"] == "Hong Kong; China"){
+                        $("button[data-id='acco_input_area']").attr("title", "Hong Kong; China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Hong Kong; China");
                     }
-                    else if (curData["area"] == "Macao, China"){
-                        $("button[data-id='acco_input_area']").attr("title", "Macao, China");
-                        $("button[data-id='acco_input_area'] .filter-option").text("Macao, China");
+                    else if (curData["area"] == "Macao; China"){
+                        $("button[data-id='acco_input_area']").attr("title", "Macao; China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Macao; China");
                     }
-                    else if (curData["area"] == "Taiwan, China"){
-                        $("button[data-id='acco_input_area']").attr("title", "Taiwan, China");
-                        $("button[data-id='acco_input_area'] .filter-option").text("Taiwan, China");
+                    else if (curData["area"] == "Taiwan; China"){
+                        $("button[data-id='acco_input_area']").attr("title", "Taiwan; China");
+                        $("button[data-id='acco_input_area'] .filter-option").text("Taiwan; China");
                     }
                     else if (curData["area"] == "Others"){
                         $("button[data-id='acco_input_area']").attr("title", "Others");
@@ -1020,12 +1020,12 @@ $(document).ready(function() {
                         $("button[data-id='acco_input_meal']").attr("title", "Vegetarian");
                         $("button[data-id='acco_input_meal'] .filter-option").text("Vegetarian")
                     }
-                    else if (is_muslim == "Other, please specify"){
-                        $("button[data-id='acco_input_meal']").attr("title", "Other, please specify");
-                        $("button[data-id='acco_input_meal'] .filter-option").text("Other, please specify");
+                    else if (is_muslim == "Other"){
+                        $("button[data-id='acco_input_meal']").attr("title", "Other; please specify");
+                        $("button[data-id='acco_input_meal'] .filter-option").text("Other; please specify");
 
-                        if (curData["is_muslim"].split(";").length > 1) {
-                            isMuslimMoreEle.attr("value", curData["is_muslim"].split(";")[1]);
+                        if (curData["is_muslim"].split(";").length > 2) {
+                            isMuslimMoreEle.attr("value", curData["is_muslim"].split(";")[2]);
                             $("#meal_more_area").show()
                         }
 
@@ -1081,15 +1081,15 @@ $(document).ready(function() {
                         $("button[data-id='acco_input_acco'] .filter-option").text("Yes")
 
                         $("#is_acco_area").show();
-                        if (curData["id_type"] == "Resident Identity Card (PRC)") {
-                            $("button[data-id='acco_input_id_type']").attr("title", "Resident Identity Card (PRC)");
-                            $("button[data-id='acco_input_id_type'] .filter-option").text("Resident Identity Card (PRC)")
+                        if (curData["id_type"] == "Resident Identity Card; PRC") {
+                            $("button[data-id='acco_input_id_type']").attr("title", "Resident Identity Card; PRC");
+                            $("button[data-id='acco_input_id_type'] .filter-option").text("Resident Identity Card; PRC")
                         }
                         else if (curData["id_type"] == "Mainland Travel Permit for Hong Kong and Macao Residents"){
                             $("button[data-id='acco_input_id_type']").attr("title", "Mainland Travel Permit for Hong Kong and Macao Residents");
                             $("button[data-id='acco_input_id_type'] .filter-option").text("Mainland Travel Permit for Hong Kong and Macao Residents");
                         }
-                        else if (curData["id_type"] == "Mainland Travel Permit for Taiwan Residents（台胞证）"){
+                        else if (curData["id_type"] == "Mainland Travel Permit for Taiwan Residents"){
                             $("button[data-id='acco_input_id_type']").attr("title", "Mainland Travel Permit for Taiwan Residents");
                             $("button[data-id='acco_input_id_type'] .filter-option").text("Mainland Travel Permit for Taiwan Residents");
                         }
@@ -1161,7 +1161,7 @@ $(document).ready(function() {
 
     $('#acco_input_meal').on('changed.bs.select',function(e){
         $("#meal_more_area").hide();
-        if ($("button[data-id='acco_input_meal']").attr("title") == "Other, please specify") {
+        if ($("button[data-id='acco_input_meal']").attr("title") == "Other; please specify") {
             $("#meal_more_area").show();
         }
     });
