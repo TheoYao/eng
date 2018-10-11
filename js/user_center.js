@@ -1166,4 +1166,380 @@ $(document).ready(function() {
         }
     });
 
+
+    $('#btn-submit-reimburse').on('click', function () {
+        var name = $.trim($('#reimburse_input_name').val());
+        if(name=='') {
+            swal('Please input name');
+            return false
+        }
+
+        var is_board_evi = $("button[data-id='reimburse_input_board_evidence']").attr("title");
+        if(is_board_evi=='only used for reimbursement of single-trip ticket. Available at the registration venue') {
+            swal('Please select whether to need hotel receipt');
+            return false
+        }
+
+        var is_ticket_evi = $("button[data-id='reimburse_input_ticket_evidence']").attr("title");
+        if(is_ticket_evi=='only used for reimbursement of single-trip ticket. Available at the registration venue') {
+            swal('Please select whether to need receipt of train/flight ticket reimbursement?');
+            return false
+        }
+
+        var zhifubao = $.trim($('#reimburse_input_zhifubao').val());
+        if(zhifubao=='') {
+            swal('Please input alipay');
+            return false
+        }
+
+        var is_contact = $("button[data-id='reimburse_input_contact']").attr("title");
+        if(is_contact=='Please select') {
+            swal('Please whether you are the contact person of your university?');
+            return false
+        }
+
+        var ticket_type = $("button[data-id='reimburse_input_ticket_type']").attr("title");
+        if(ticket_type=='Please select') {
+            swal('Please select ticket type');
+            return false
+        }
+
+
+        var traffic_id = "";
+        var traffic_begin = "";
+        var traffic_end = "";
+        var seat_type = "";
+        var traffic_price = "";
+        var ret_traffic_id = "";
+        var ret_traffic_begin = "";
+        var ret_traffic_end = "";
+        var ret_seat_type = "";
+        var ret_traffic_price = "";
+        if(ticket_type=='飞机票') {
+            traffic_id = $.trim($('#reimburse_input_air_num').val());
+            if(traffic_id=='') {
+                swal('请输入航班号');
+                return false
+            }
+            traffic_begin = $.trim($('#reimburse_input_air_begin').val());
+            if(traffic_begin=='') {
+                swal('请输入起点（市）');
+                return false
+            }
+            var traffic_begin_airport = $.trim($('#reimburse_input_air_begin_port').val());
+            if(traffic_begin_airport=='') {
+                swal('请输入起点机场名');
+                return false
+            }
+            traffic_begin = traffic_begin + ";" + traffic_begin_airport;
+
+            traffic_end = $.trim($('#reimburse_input_air_end').val());
+            if(traffic_end=='') {
+                swal('请输入终点（市）');
+                return false
+            }
+            var traffic_end_airport = $.trim($('#reimburse_input_air_end_port').val());
+            if(traffic_end_airport=='') {
+                swal('请输入终点机场名');
+                return false
+            }
+            traffic_end = traffic_end + ";" + traffic_end_airport;
+
+            seat_type = $("button[data-id='reimburse_input_air_type']").attr("title");
+            if(seat_type=='请选择') {
+                swal('请选择座位类型');
+                return false
+            }
+
+            traffic_price =  $.trim($('#reimburse_input_air_price').val());
+            if(traffic_price=='') {
+                swal('请输入金额，不含保险');
+                return false
+            }
+        }
+        else if(ticket_type=='火车票') {
+            traffic_id = $.trim($('#reimburse_input_railway_num').val());
+            if(traffic_id=='') {
+                swal('请输入车次');
+                return false
+            }
+            traffic_begin = $.trim($('#reimburse_input_railway_begin').val());
+            if(traffic_begin=='') {
+                swal('请输入起点站名');
+                return false
+            }
+
+            traffic_end = $.trim($('#reimburse_input_railway_end').val());
+            if(traffic_end=='') {
+                swal('请输入终点站名');
+                return false
+            }
+            seat_type = $("button[data-id='reimburse_input_railway_type']").attr("title");
+            if(seat_type=='请选择') {
+                swal('请选择座位类型');
+                return false
+            }
+
+            traffic_price =  $.trim($('#reimburse_input_railway_price').val());
+            if(traffic_price=='') {
+                swal('请输入金额，不含保险');
+                return false
+            }
+        }
+
+        if(is_contact=='是') {
+            ret_traffic_id = $.trim($('#reimburse_input_air_num_more').val());
+            if(ret_traffic_id=='') {
+                swal('请输入航班号');
+                return false
+            }
+            ret_traffic_begin = $.trim($('#reimburse_input_air_begin_more').val());
+            if(ret_traffic_begin=='') {
+                swal('请输入起点（市）');
+                return false
+            }
+            var ret_traffic_begin_airport = $.trim($('#reimburse_input_air_begin_port_more').val());
+            if(ret_traffic_begin_airport=='') {
+                swal('请输入起点机场名');
+                return false
+            }
+            ret_traffic_begin = ret_traffic_begin + ";" + ret_traffic_begin_airport;
+
+            ret_traffic_end = $.trim($('#reimburse_input_air_end_more').val());
+            if(ret_traffic_end=='') {
+                swal('请输入终点（市）');
+                return false
+            }
+            var ret_traffic_end_airport = $.trim($('#reimburse_input_air_end_port_more').val());
+            if(ret_traffic_end_airport=='') {
+                swal('请输入终点机场名');
+                return false
+            }
+            ret_traffic_end = ret_traffic_end + ";" + ret_traffic_end_airport;
+
+            ret_seat_type = $("button[data-id='reimburse_input_air_type_more']").attr("title");
+            if(ret_seat_type=='请选择') {
+                swal('请选择座位类型');
+                return false
+            }
+
+            ret_traffic_price =  $.trim($('#reimburse_input_air_price_more').val());
+            if(ret_traffic_price=='') {
+                swal('请输入金额，不含保险');
+                return false
+            }
+
+        }
+
+
+        swal(
+            {
+                title: "确定提交吗？",
+                text: "每人只能提交一次，提交后信息将无法修改！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定提交",
+                closeOnConfirm: false
+            }, function(){
+                var data = new FormData();
+                data.append('username', username);
+                data.append('name', name);
+                data.append('is_board_evi', is_board_evi);
+                data.append('is_ticket_evi', is_ticket_evi);
+                data.append('zhifubao', zhifubao);
+                data.append('is_contact', is_contact);
+                data.append('ticket_type', ticket_type);
+                data.append('traffic_id', traffic_id);
+                data.append('traffic_begin', traffic_begin);
+                data.append('traffic_end', traffic_end);
+                data.append('seat_type', seat_type);
+                data.append('traffic_price', traffic_price);
+                data.append('ret_traffic_id', ret_traffic_id);
+                data.append('ret_traffic_begin', ret_traffic_begin);
+                data.append('ret_traffic_end', ret_traffic_end);
+                data.append('ret_seat_type', ret_seat_type);
+                data.append('ret_traffic_price', ret_traffic_price);
+
+
+                $.ajax({
+                    type: "POST",
+                    url: url +"Document/addPaymentInfo",
+                    data: data,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            swal("提交成功！", "", "success");
+                            window.location.reload();
+                        } else {
+                            swal("出现问题", data.info, "error");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        swal('网路不给力，请稍候再试');
+                    }
+                })
+            });
+    });
+
+    reimbuseInfo(username);
+    function reimbuseInfo(username) {
+        $.ajax({
+            type: "Get",
+            url:  url +"Document/getPaymentInfo?username=" + username,
+            //url:  "./json/reimburse.json",
+            dataType: 'json',
+            success: function (res) {
+                if(res){
+                    $('.selectpicker').selectpicker('refresh');
+                    var curData = res;
+                    if (!curData) {
+                        return
+                    }
+                    $('#reimburse_input_name').attr("value", curData["name"]);
+
+                    $("button[data-id='reimburse_input_board_evidence']").attr("title", curData["is_board_evi"]);
+                    $("button[data-id='reimburse_input_board_evidence'] .filter-option").text(curData["is_board_evi"]);
+
+                    $("button[data-id='reimburse_input_ticket_evidence']").attr("title", curData["is_board_evi"]);
+                    $("button[data-id='reimburse_input_ticket_evidence'] .filter-option").text(curData["is_board_evi"]);
+
+                    $('#reimburse_input_zhifubao').attr("value", curData["zhifubao"]);
+
+                    $("button[data-id='reimburse_input_contact']").attr("title", curData["is_contact"]);
+                    $("button[data-id='reimburse_input_contact'] .filter-option").text(curData["is_contact"]);
+
+                    $("button[data-id='reimburse_input_ticket_type']").attr("title", curData["ticket_type"]);
+                    $("button[data-id='reimburse_input_ticket_type'] .filter-option").text(curData["ticket_type"]);
+
+                    if(curData["ticket_type"]=='飞机票') {
+                        var traffic_begin = "";
+                        var traffic_begin_airport="";
+                        if (curData["traffic_begin"].split(";").length==2) {
+                            traffic_begin = curData["traffic_begin"].split(";")[0];
+                            traffic_begin_airport = curData["traffic_begin"].split(";")[1];
+                        }
+
+                        var traffic_end = "";
+                        var traffic_end_airport="";
+                        if (curData["traffic_end"].split(";").length==2) {
+                            traffic_end = curData["traffic_end"].split(";")[0];
+                            traffic_end_airport = curData["traffic_end"].split(";")[1];
+                        }
+
+                        $('#reimburse_input_air_num').attr("value", curData["traffic_id"]);
+                        $('#reimburse_input_air_begin').attr("value", traffic_begin);
+                        $('#reimburse_input_air_begin_port').attr("value", traffic_begin_airport);
+                        $('#reimburse_input_air_end').attr("value", traffic_end);
+                        $('#reimburse_input_air_end_port').attr("value", traffic_end_airport);
+
+                        $("button[data-id='reimburse_input_air_type']").attr("title", curData["seat_type"]);
+                        $("button[data-id='reimburse_input_air_type'] .filter-option").text(curData["seat_type"]);
+
+                        $('#reimburse_input_air_price').attr("value", curData["traffic_price"]);
+                        if(curData["is_contact"] == "是") {
+                            var ret_traffic_begin = "";
+                            var ret_traffic_begin_airport="";
+                            if (curData["ret_traffic_begin"].split(";").length==2) {
+                                ret_traffic_begin = curData["ret_traffic_begin"].split(";")[0];
+                                ret_traffic_begin_airport = curData["ret_traffic_begin"].split(";")[1];
+                            }
+
+                            var ret_traffic_end = "";
+                            var ret_traffic_end_airport="";
+                            if (curData["ret_traffic_end"].split(";").length==2) {
+                                ret_traffic_end = curData["ret_traffic_end"].split(";")[0];
+                                ret_traffic_end_airport = curData["ret_traffic_end"].split(";")[1];
+                            }
+
+                            $('#reimburse_input_air_num_more').attr("value", curData["ret_traffic_id"]);
+                            $('#reimburse_input_air_begin_more').attr("value", ret_traffic_begin);
+                            $('#reimburse_input_air_begin_port_more').attr("value", ret_traffic_begin_airport);
+                            $('#reimburse_input_air_end_more').attr("value", ret_traffic_end);
+                            $('#reimburse_input_air_end_port_more').attr("value", ret_traffic_end_airport);
+
+                            $("button[data-id='reimburse_input_air_type_more']").attr("title", curData["ret_seat_type"]);
+                            $("button[data-id='reimburse_input_air_type_more'] .filter-option").text(curData["ret_seat_type"]);
+
+                            $('#reimburse_input_air_price_more').attr("value", curData["ret_traffic_price"]);
+                            $("#more_air_area").show()
+                        }
+
+                        $("#is_air_area").show()
+                    }
+                    else if(curData["ticket_type"]=='火车票') {
+                        var traffic_begin = curData["traffic_begin"];
+                        var traffic_end = curData["traffic_end"];
+
+                        $('#reimburse_input_railway_num').attr("value", curData["traffic_id"]);
+                        $('#reimburse_input_railway_begin').attr("value", traffic_begin);
+                        $('#reimburse_input_railway_end').attr("value", traffic_end);
+
+                        $("button[data-id='reimburse_input_railway_type']").attr("title", curData["seat_type"]);
+                        $("button[data-id='reimburse_input_railway_type'] .filter-option").text(curData["seat_type"]);
+
+                        $('#reimburse_input_railway_price').attr("value", curData["traffic_price"]);
+                        if(curData["is_contact"] == "是") {
+                            var ret_traffic_begin = curData["ret_traffic_begin"];
+                            var ret_traffic_end = curData["ret_traffic_end"];
+
+                            $('#reimburse_input_railway_num_more').attr("value", curData["ret_traffic_id"]);
+                            $('#reimburse_input_railway_begin_more').attr("value", ret_traffic_begin);
+                            $('#reimburse_input_railway_end_more').attr("value", ret_traffic_end);
+
+                            $("button[data-id='reimburse_input_railway_type_more']").attr("title", curData["ret_seat_type"]);
+                            $("button[data-id='reimburse_input_railway_type_more'] .filter-option").text(curData["ret_seat_type"]);
+
+                            $('#reimburse_input_railway_price_more').attr("value", curData["ret_traffic_price"]);
+                            $("#more_railway_area").show()
+                        }
+
+                        $("#is_railway_area").show()
+                    }
+
+
+                    $('#reimburse_input_name').attr('disabled',true);
+                    $('#reimburse_input_board_evidence').attr('disabled',true);
+                    $('#reimburse_input_ticket_evidence').attr('disabled',true);
+                    $('#reimburse_input_zhifubao').attr('disabled',true);
+                    $('#reimburse_input_contact').attr('disabled',true);
+                    $('#reimburse_input_ticket_type').attr('disabled',true);
+                    $('#reimburse_input_air_num').attr('disabled',true);
+                    $('#reimburse_input_air_begin').attr('disabled',true);
+                    $('#reimburse_input_air_begin_port').attr('disabled',true);
+                    $('#reimburse_input_air_end').attr('disabled',true);
+                    $('#reimburse_input_air_end_port').attr('disabled',true);
+                    $('#reimburse_input_air_type').attr('disabled',true);
+                    $('#reimburse_input_air_price').attr('disabled',true);
+                    $('#reimburse_input_air_num_more').attr('disabled',true);
+                    $('#reimburse_input_air_begin_more').attr('disabled',true);
+                    $('#reimburse_input_air_begin_port_more').attr('disabled',true);
+                    $('#reimburse_input_air_end_more').attr('disabled',true);
+                    $('#reimburse_input_air_end_port_more').attr('disabled',true);
+                    $('#reimburse_input_air_type_more').attr('disabled',true);
+                    $('#reimburse_input_air_price_more').attr('disabled',true);
+                    $('#reimburse_input_railway_num').attr('disabled',true);
+                    $('#reimburse_input_railway_begin').attr('disabled',true);
+                    $('#reimburse_input_railway_end').attr('disabled',true);
+                    $('#reimburse_input_railway_type').attr('disabled',true);
+                    $('#reimburse_input_railway_price').attr('disabled',true);
+                    $('#reimburse_input_railway_num_more').attr('disabled',true);
+                    $('#reimburse_input_railway_begin_more').attr('disabled',true);
+                    $('#reimburse_input_railway_end_more').attr('disabled',true);
+                    $('#reimburse_input_railway_type_more').attr('disabled',true);
+
+
+                    $("#btn-submit-reimburse").hide();
+
+                }
+            }
+
+        });
+
+
+    }
+
 });
