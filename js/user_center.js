@@ -550,8 +550,8 @@ $(document).ready(function() {
         }
     });
 
-    $('#reimburse_input_air').on('changed.bs.select',function(e){
-        if ($("button[data-id='reimburse_input_air']").attr("title") == "Yes") {
+    $('#reimburse_input_ticket_type').on('changed.bs.select',function(e){
+        if ($("button[data-id='reimburse_input_ticket_type']").attr("title") == "flight ticket") {
             $("#is_air_area").show();
             $("#is_railway_area").hide();
         }
@@ -560,17 +560,23 @@ $(document).ready(function() {
             $("#is_air_area").hide();
         }
     });
+    $('#reimburse_input_contact').on('changed.bs.select',function(e){
+        if ($("button[data-id='reimburse_input_contact']").attr("title") == "Yes") {
+            $("#more_air_area").show();
+            $("#more_railway_area").show();
+        }
+        else {
+            $("#more_air_area").hide();
+            $("#more_railway_area").hide();
+        }
+    });
+
 
     $('.user-nav-bottom-item,.user-nav-item')
         .click(
             function(){
                 var id_array = ($(this).attr("id")).split("-");
                 var index = parseInt(id_array[id_array.length - 1]);
-
-                if (index > 3 && index < 5) {
-                    return
-                }
-
 
                 if (index == 1) {
                     var manu_list = $("#manu-check-table");
@@ -591,6 +597,13 @@ $(document).ready(function() {
                         return;
                     }
                 }
+                if (index == 4) {
+                    if(!isRegisterInfoSubmit) {
+                        swal("Sorry, please register firstly.");
+                        return;
+                    }
+                }
+
                 for (i = 0; i < 7; i++) {
                     var x = $("#user-center-show-body-"+i);
                     if (i == index) {
@@ -629,6 +642,7 @@ $(document).ready(function() {
 
     var isFulltextSubmit = false;
     var isFulltextPostBoth = false;
+    var isRegisterInfoSubmit = false;
     function index2Cal() {
         isFulltextPostBoth = false;
         $('#oral_report_area').hide();
@@ -954,6 +968,7 @@ $(document).ready(function() {
                     if (!curData) {
                         return
                     }
+                    isRegisterInfoSubmit = true;
                     var nameEle =$('#acco_input_name');
                     var sexEle=$('#acco_input_sex');
                     var schoolEle =$('#acco_input_school');
@@ -1215,131 +1230,161 @@ $(document).ready(function() {
         var ret_traffic_end = "";
         var ret_seat_type = "";
         var ret_traffic_price = "";
-        if(ticket_type=='飞机票') {
+        if(ticket_type=='flight ticket') {
             traffic_id = $.trim($('#reimburse_input_air_num').val());
             if(traffic_id=='') {
-                swal('请输入航班号');
+                swal('Please input flight number');
                 return false
             }
             traffic_begin = $.trim($('#reimburse_input_air_begin').val());
             if(traffic_begin=='') {
-                swal('请输入起点（市）');
+                swal('Please input departure (city)');
                 return false
             }
             var traffic_begin_airport = $.trim($('#reimburse_input_air_begin_port').val());
             if(traffic_begin_airport=='') {
-                swal('请输入起点机场名');
+                swal('Please input departure (airport)');
                 return false
             }
             traffic_begin = traffic_begin + ";" + traffic_begin_airport;
 
             traffic_end = $.trim($('#reimburse_input_air_end').val());
             if(traffic_end=='') {
-                swal('请输入终点（市）');
+                swal('Please input arrival (city)');
                 return false
             }
             var traffic_end_airport = $.trim($('#reimburse_input_air_end_port').val());
             if(traffic_end_airport=='') {
-                swal('请输入终点机场名');
+                swal('Please input arrival (airport)');
                 return false
             }
             traffic_end = traffic_end + ";" + traffic_end_airport;
 
             seat_type = $("button[data-id='reimburse_input_air_type']").attr("title");
-            if(seat_type=='请选择') {
-                swal('请选择座位类型');
+            if(seat_type=='Please select') {
+                swal('Please select seat type');
                 return false
             }
 
             traffic_price =  $.trim($('#reimburse_input_air_price').val());
             if(traffic_price=='') {
-                swal('请输入金额，不含保险');
+                swal('Please input ticket price at face value');
                 return false
             }
         }
-        else if(ticket_type=='火车票') {
+        else if(ticket_type=='train ticket') {
             traffic_id = $.trim($('#reimburse_input_railway_num').val());
             if(traffic_id=='') {
-                swal('请输入车次');
+                swal('Please input train number');
                 return false
             }
             traffic_begin = $.trim($('#reimburse_input_railway_begin').val());
             if(traffic_begin=='') {
-                swal('请输入起点站名');
+                swal('Please input departure (city)');
                 return false
             }
 
             traffic_end = $.trim($('#reimburse_input_railway_end').val());
             if(traffic_end=='') {
-                swal('请输入终点站名');
+                swal('Please input arrival (city)');
                 return false
             }
             seat_type = $("button[data-id='reimburse_input_railway_type']").attr("title");
-            if(seat_type=='请选择') {
-                swal('请选择座位类型');
+            if(seat_type=='Please select') {
+                swal('Please select seat type');
                 return false
             }
 
             traffic_price =  $.trim($('#reimburse_input_railway_price').val());
             if(traffic_price=='') {
-                swal('请输入金额，不含保险');
+                swal('Please input ticket price at face value');
                 return false
             }
         }
 
-        if(is_contact=='是') {
-            ret_traffic_id = $.trim($('#reimburse_input_air_num_more').val());
-            if(ret_traffic_id=='') {
-                swal('请输入航班号');
-                return false
-            }
-            ret_traffic_begin = $.trim($('#reimburse_input_air_begin_more').val());
-            if(ret_traffic_begin=='') {
-                swal('请输入起点（市）');
-                return false
-            }
-            var ret_traffic_begin_airport = $.trim($('#reimburse_input_air_begin_port_more').val());
-            if(ret_traffic_begin_airport=='') {
-                swal('请输入起点机场名');
-                return false
-            }
-            ret_traffic_begin = ret_traffic_begin + ";" + ret_traffic_begin_airport;
+        if(is_contact=='Yes') {
+            if(ticket_type=='flight ticket') {
+                ret_traffic_id = $.trim($('#reimburse_input_air_num_more').val());
+                if (ret_traffic_id == '') {
+                    swal('Please input return trip-Flight Number');
+                    return false
+                }
+                ret_traffic_begin = $.trim($('#reimburse_input_air_begin_more').val());
+                if (ret_traffic_begin == '') {
+                    swal('Please input return trip-Departure (city)');
+                    return false
+                }
+                var ret_traffic_begin_airport = $.trim($('#reimburse_input_air_begin_port_more').val());
+                if (ret_traffic_begin_airport == '') {
+                    swal('Please input return trip-Departure (airport)');
+                    return false
+                }
+                ret_traffic_begin = ret_traffic_begin + ";" + ret_traffic_begin_airport;
 
-            ret_traffic_end = $.trim($('#reimburse_input_air_end_more').val());
-            if(ret_traffic_end=='') {
-                swal('请输入终点（市）');
-                return false
-            }
-            var ret_traffic_end_airport = $.trim($('#reimburse_input_air_end_port_more').val());
-            if(ret_traffic_end_airport=='') {
-                swal('请输入终点机场名');
-                return false
-            }
-            ret_traffic_end = ret_traffic_end + ";" + ret_traffic_end_airport;
+                ret_traffic_end = $.trim($('#reimburse_input_air_end_more').val());
+                if (ret_traffic_end == '') {
+                    swal('Please input return trip-Arrival (city)');
+                    return false
+                }
+                var ret_traffic_end_airport = $.trim($('#reimburse_input_air_end_port_more').val());
+                if (ret_traffic_end_airport == '') {
+                    swal('Please input return trip-Arrival (airport)');
+                    return false
+                }
+                ret_traffic_end = ret_traffic_end + ";" + ret_traffic_end_airport;
 
-            ret_seat_type = $("button[data-id='reimburse_input_air_type_more']").attr("title");
-            if(ret_seat_type=='请选择') {
-                swal('请选择座位类型');
-                return false
-            }
+                ret_seat_type = $("button[data-id='reimburse_input_air_type_more']").attr("title");
+                if (ret_seat_type == 'Please select') {
+                    swal('Please select seat type');
+                    return false
+                }
 
-            ret_traffic_price =  $.trim($('#reimburse_input_air_price_more').val());
-            if(ret_traffic_price=='') {
-                swal('请输入金额，不含保险');
-                return false
+                ret_traffic_price = $.trim($('#reimburse_input_air_price_more').val());
+                if (ret_traffic_price == '') {
+                    swal('Please input ticket price at face value');
+                    return false
+                }
             }
+            else if(ticket_type=='train ticket') {
+                ret_traffic_id = $.trim($('#reimburse_input_railway_num_more').val());
+                if(ret_traffic_id=='') {
+                    swal('Please input return trip-train number');
+                    return false
+                }
+                ret_traffic_begin = $.trim($('#reimburse_input_railway_begin_more').val());
+                if(ret_traffic_begin=='') {
+                    swal('Please input return trip-departure (city)');
+                    return false
+                }
 
+                ret_traffic_end = $.trim($('#reimburse_input_railway_end_more').val());
+                if(ret_traffic_end=='') {
+                    swal('Please input return trip-arrival (city)');
+                    return false
+                }
+                ret_seat_type = $("button[data-id='reimburse_input_railway_type_more']").attr("title");
+                if(ret_seat_type=='Please select') {
+                    swal('Please select return trip-seat type');
+                    return false
+                }
+
+                ret_traffic_price =  $.trim($('#reimburse_input_railway_price_more').val());
+                if(ret_traffic_price=='') {
+                    swal('Please input return trip-ticket price at face value');
+                    return false
+                }
+            }
         }
 
 
         swal(
             {
-                title: "确定提交吗？",
-                text: "每人只能提交一次，提交后信息将无法修改！",
+                title: "Confirm to submit？",
+                text: "Only once can be submitted, and forbidden to modify",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定提交",
+                confirmButtonText: "Confirmation",
                 closeOnConfirm: false
             }, function(){
                 var data = new FormData();
@@ -1371,15 +1416,15 @@ $(document).ready(function() {
                     contentType: false,
                     success: function (data) {
                         if (data.status == 1) {
-                            swal("提交成功！", "", "success");
+                            swal("Success！", "", "success");
                             window.location.reload();
                         } else {
-                            swal("出现问题", data.info, "error");
+                            swal("Error", data.info, "error");
                             return false;
                         }
                     },
                     error: function () {
-                        swal('网路不给力，请稍候再试');
+                        swal('Sorry, Please retry later', '', "error");
                     }
                 })
             });
@@ -1415,7 +1460,7 @@ $(document).ready(function() {
                     $("button[data-id='reimburse_input_ticket_type']").attr("title", curData["ticket_type"]);
                     $("button[data-id='reimburse_input_ticket_type'] .filter-option").text(curData["ticket_type"]);
 
-                    if(curData["ticket_type"]=='飞机票') {
+                    if(curData["ticket_type"]=='flight ticket') {
                         var traffic_begin = "";
                         var traffic_begin_airport="";
                         if (curData["traffic_begin"].split(";").length==2) {
@@ -1440,7 +1485,7 @@ $(document).ready(function() {
                         $("button[data-id='reimburse_input_air_type'] .filter-option").text(curData["seat_type"]);
 
                         $('#reimburse_input_air_price').attr("value", curData["traffic_price"]);
-                        if(curData["is_contact"] == "是") {
+                        if(curData["is_contact"] == "Yes") {
                             var ret_traffic_begin = "";
                             var ret_traffic_begin_airport="";
                             if (curData["ret_traffic_begin"].split(";").length==2) {
@@ -1470,7 +1515,7 @@ $(document).ready(function() {
 
                         $("#is_air_area").show()
                     }
-                    else if(curData["ticket_type"]=='火车票') {
+                    else if(curData["ticket_type"]=='train ticket') {
                         var traffic_begin = curData["traffic_begin"];
                         var traffic_end = curData["traffic_end"];
 
@@ -1482,7 +1527,7 @@ $(document).ready(function() {
                         $("button[data-id='reimburse_input_railway_type'] .filter-option").text(curData["seat_type"]);
 
                         $('#reimburse_input_railway_price').attr("value", curData["traffic_price"]);
-                        if(curData["is_contact"] == "是") {
+                        if(curData["is_contact"] == "Yes") {
                             var ret_traffic_begin = curData["ret_traffic_begin"];
                             var ret_traffic_end = curData["ret_traffic_end"];
 
@@ -1530,7 +1575,7 @@ $(document).ready(function() {
                     $('#reimburse_input_railway_begin_more').attr('disabled',true);
                     $('#reimburse_input_railway_end_more').attr('disabled',true);
                     $('#reimburse_input_railway_type_more').attr('disabled',true);
-
+                    $('#reimburse_input_railway_price_more').attr('disabled',true);
 
                     $("#btn-submit-reimburse").hide();
 

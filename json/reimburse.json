@@ -1,0 +1,19 @@
+{
+  "username": "xuebinffff",
+  "name": "geageage",
+  "is_board_evi": "Yes",
+  "is_ticket_evi": "Yes",
+  "zhifubao": "31512512",
+  "is_contact": "Yes",
+  "ticket_type": "flight ticket",
+  "traffic_id": "K4214",
+  "traffic_begin": "北京;南苑",
+  "traffic_end": "上海;虹桥",
+  "seat_type": "经济舱",
+  "traffic_price":"1111",
+  "ret_traffic_id": "K3242",
+  "ret_traffic_begin": "上海;虹桥",
+  "ret_traffic_end":"北京;南苑",
+  "ret_seat_type":"经济舱",
+  "ret_traffic_price":"2222"
+}
