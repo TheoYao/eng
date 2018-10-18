@@ -19,13 +19,15 @@ $(document).ready(function() {
     });
 
     /************ count down***********/
+
     var clock;
     var currentDate = new Date();
-    var futureDate  = new Date(2018, 9, 18);
+    var futureDate  = new Date();
     var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
     clock = $('.clock').FlipClock(diff, {
         clockFace: 'DailyCounter',
-        countdown: true
+        countdown: false,
+        autoStart: false
     });
 
 
