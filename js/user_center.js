@@ -969,6 +969,7 @@ $(document).ready(function() {
                         return
                     }
                     isRegisterInfoSubmit = true;
+                    $('#volumn-download-items').show();
                     var nameEle =$('#acco_input_name');
                     var sexEle=$('#acco_input_sex');
                     var schoolEle =$('#acco_input_school');
